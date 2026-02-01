@@ -1,5 +1,6 @@
 {
   "name": "@acme/utils",
+  "type": "module",
   "version": "0.0.0",
   "imports": {
     "#/*": "./src/*"
@@ -13,15 +14,15 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "tsup src/index.tsx --format esm,cjs --dts --external react",
-    "dev": "tsup src/index.tsx --format esm,cjs --watch --dts --external react",
+    "build": "tsdown src/index.tsx --format esm,cjs --dts --external react",
+    "dev": "tsdown src/index.tsx --format esm,cjs --watch --dts --external react",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "devDependencies": {
     "@acme/tsconfig": "workspace:*",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
-    "tsup": "^8.0.2",
+    "tsdown": "^0.20.1",
     "typescript": "5.5.4"
   },
   "dependencies": {
