@@ -3,14 +3,12 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "check": "turbo run check",
+    "fix": "turbo run fix",
     "clean": "turbo run clean && rm -rf node_modules",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo run build --filter=@acme/docs^... && changeset publish",
-    "check": "ultracite check",
-    "fix": "ultracite fix",
     "prepare": "lefthook install"
   },
   "devDependencies": {
