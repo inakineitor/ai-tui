@@ -5,6 +5,7 @@
     "dev": "turbo run dev",
     "check": "turbo run check",
     "fix": "turbo run fix",
+    "lint:package": "turbo run lint:package",
     "clean": "turbo run clean && rm -rf node_modules",
     "changeset": "changeset",
     "version-packages": "changeset version",
@@ -15,6 +16,7 @@
     "@biomejs/biome": "2.3.12",
     "@changesets/cli": "^2.27.1",
     "lefthook": "^2.0.16",
+    "publint": "^0.3.17",
     "turbo": "^2.8.1",
     "ultracite": "7.1.1"
   },

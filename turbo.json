@@ -14,6 +14,9 @@
     "//#fix": {
       "cache": false
     },
+    "lint:package": {
+      "dependsOn": ["^build", "build"]
+    },
     "dev": {
       "cache": false,
       "persistent": true
