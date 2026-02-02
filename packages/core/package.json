@@ -85,6 +85,7 @@
     "url": "git+https://github.com/inakineitor/ai-sdk-tui.git"
   },
   "engines": {
+    "node": ">=20",
     "bun": ">=1.1.0"
   }
 }
