@@ -1,13 +1,12 @@
 {
   "name": "@ai-tui/core",
-  "version": "0.0.2",
+  "version": "0.0.3",
+  "description": "Build AI agent terminal UIs with the Vercel AI SDK",
   "type": "module",
-  "imports": {
-    "#/*": "./src/*"
-  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": {
@@ -18,30 +17,74 @@
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
       }
-    }
+    },
+    "./package.json": "./package.json"
   },
-  "sideEffects": false,
-  "license": "MIT",
   "files": [
-    "dist/**"
+    "dist",
+    "README.md"
   ],
-  "scripts": {
-    "build": "tsdown",
-    "dev": "tsdown --watch",
-    "lint:package": "publint",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
-  },
-  "devDependencies": {
-    "@ai-tui/tsconfig": "workspace:*",
-    "@types/react": "^18.2.61",
-    "@types/react-dom": "^18.2.19",
-    "tsdown": "^0.20.1",
-    "typescript": "5.5.4"
-  },
-  "dependencies": {
-    "react": "^18.2.0"
+  "imports": {
+    "#*": "./src/*"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "prepublishOnly": "pnpm build",
+    "check-types": "tsc --noEmit",
+    "lint:package": "publint",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "peerDependencies": {
+    "@ai-sdk/react": ">=3.0.0",
+    "@opentui/core": ">=0.1.72",
+    "@opentui/react": ">=0.1.72",
+    "ai": ">=6.0.0",
+    "react": ">=19.0.0",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "clipboardy": "^5.0.2",
+    "deepmerge": "^4.3.1",
+    "fast-glob": "^3.3.3",
+    "figlet": "^1.8.0",
+    "fuzzysort": "^3.1.0",
+    "opentui-spinner": "^0.0.6",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@ai-sdk/react": "^3.0.41",
+    "@happy-dom/global-registrator": "^20.3.7",
+    "@opentui/core": "^0.1.72",
+    "@opentui/react": "^0.1.72",
+    "@testing-library/react": "^16.3.2",
+    "@types/bun": "^1.3.6",
+    "@types/figlet": "^1.7.0",
+    "@types/node": "^25.1.0",
+    "@types/react": "^19",
+    "ai": "^6.0.42",
+    "happy-dom": "^20.3.7",
+    "react": "^19.2.3",
+    "tsdown": "^0.20.1",
+    "typescript": "^5"
+  },
+  "keywords": [
+    "ai",
+    "tui",
+    "terminal",
+    "ai-sdk",
+    "cli",
+    "agent"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inakineitor/ai-sdk-tui.git"
+  },
+  "engines": {
+    "bun": ">=1.1.0"
   }
 }
