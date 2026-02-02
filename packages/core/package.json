@@ -3,10 +3,12 @@
   "version": "0.0.3",
   "description": "Build AI agent terminal UIs with the Vercel AI SDK",
   "type": "module",
+  "imports": {
+    "#*": "./src/*"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
-  "sideEffects": false,
   "exports": {
     ".": {
       "import": {
@@ -20,22 +22,17 @@
     },
     "./package.json": "./package.json"
   },
+  "sideEffects": false,
+  "license": "MIT",
   "files": [
-    "dist",
-    "README.md"
+    "dist/**"
   ],
-  "imports": {
-    "#*": "./src/*"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",
-    "prepublishOnly": "pnpm build",
-    "check-types": "tsc --noEmit",
     "lint:package": "publint",
+    "prepublishOnly": "pnpm run build",
+    "check-types": "tsc --noEmit",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "peerDependencies": {
@@ -43,8 +40,7 @@
     "@opentui/core": ">=0.1.72",
     "@opentui/react": ">=0.1.72",
     "ai": ">=6.0.0",
-    "react": ">=19.0.0",
-    "typescript": "^5"
+    "react": ">=19.0.0"
   },
   "dependencies": {
     "clipboardy": "^5.0.2",
@@ -71,6 +67,15 @@
     "tsdown": "^0.20.1",
     "typescript": "^5"
   },
+  "engines": {
+    "node": ">=20",
+    "bun": ">=1.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inakineitor/ai-tui.git",
+    "directory": "packages/core"
+  },
   "keywords": [
     "ai",
     "tui",
@@ -79,13 +84,7 @@
     "cli",
     "agent"
   ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/inakineitor/ai-sdk-tui.git"
-  },
-  "engines": {
-    "node": ">=20",
-    "bun": ">=1.1.0"
+  "publishConfig": {
+    "access": "public"
   }
 }

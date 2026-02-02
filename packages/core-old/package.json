@@ -18,7 +18,8 @@
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
       }
-    }
+    },
+    "./package.json": "./package.json"
   },
   "sideEffects": false,
   "license": "MIT",
@@ -31,15 +32,15 @@
     "lint:package": "publint",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
+  "dependencies": {
+    "react": "^19.0.0"
+  },
   "devDependencies": {
     "@ai-tui/tsconfig": "workspace:*",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "tsdown": "^0.20.1",
     "typescript": "5.5.4"
-  },
-  "dependencies": {
-    "react": "^19.0.0"
   },
   "publishConfig": {
     "access": "public"
