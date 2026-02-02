@@ -9,7 +9,7 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build --filter=@acme/docs^... && changeset publish",
+    "release": "turbo run build --filter=@ai-tui/docs^... && changeset publish",
     "prepare": "lefthook install"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 {
-  "name": "@acme/docs",
+  "name": "@ai-tui/docs",
   "version": "0.0.0",
   "private": true,
   "imports": {
@@ -12,14 +12,14 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next"
   },
   "dependencies": {
-    "@acme/core": "workspace:*",
-    "@acme/utils": "workspace:*",
+    "@ai-tui/core": "workspace:*",
+    "@ai-tui/components": "workspace:*",
     "next": "16.0.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@acme/tsconfig": "workspace:*",
+    "@ai-tui/tsconfig": "workspace:*",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",

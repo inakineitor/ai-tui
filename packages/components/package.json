@@ -1,5 +1,5 @@
 {
-  "name": "@acme/core",
+  "name": "@ai-tui/components",
   "version": "0.0.0",
   "type": "module",
   "imports": {
@@ -32,7 +32,7 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "devDependencies": {
-    "@acme/tsconfig": "workspace:*",
+    "@ai-tui/tsconfig": "workspace:*",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
     "tsdown": "^0.20.1",
