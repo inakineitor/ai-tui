@@ -26,6 +26,7 @@ function formatTime(timestamp: number): string {
   });
 }
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex message parsing for timeline display
 function extractTimelineEntries(messages: UIMessage[]): TimelineEntry[] {
   const entries: TimelineEntry[] = [];
 

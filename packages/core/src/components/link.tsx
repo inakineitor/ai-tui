@@ -42,7 +42,6 @@ export function Link({ href, children, fg }: LinkProps) {
   const color = fg ?? theme.primary;
 
   return (
-    // biome-ignore lint/a11y/noStaticElementInteractions: Terminal hyperlink
     <text fg={color} onMouseUp={() => openUrl(href)}>
       {children ?? href}
     </text>

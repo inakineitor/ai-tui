@@ -32,6 +32,7 @@ export function detectTerminalMode(): Promise<ThemeMode> {
       clearTimeout(timeout);
     };
 
+    // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex terminal escape sequence parsing
     const handler = (data: Buffer) => {
       const str = data.toString();
       const match = str.match(OSC_11_RESPONSE_REGEX);
@@ -48,8 +49,11 @@ export function detectTerminalMode(): Promise<ThemeMode> {
         if (color.startsWith("rgb:")) {
           // Format: rgb:RRRR/GGGG/BBBB (16-bit per channel)
           const parts = color.substring(4).split("/");
-          r = Number.parseInt(parts[0] ?? "0", 16) >> 8; // Convert 16-bit to 8-bit
+          // biome-ignore lint/suspicious/noBitwiseOperators: Intentional 16-bit to 8-bit color conversion
+          r = Number.parseInt(parts[0] ?? "0", 16) >> 8;
+          // biome-ignore lint/suspicious/noBitwiseOperators: Intentional 16-bit to 8-bit color conversion
           g = Number.parseInt(parts[1] ?? "0", 16) >> 8;
+          // biome-ignore lint/suspicious/noBitwiseOperators: Intentional 16-bit to 8-bit color conversion
           b = Number.parseInt(parts[2] ?? "0", 16) >> 8;
         } else if (color.startsWith("#")) {
           // Format: #RRGGBB

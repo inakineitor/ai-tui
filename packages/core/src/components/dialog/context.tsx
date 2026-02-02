@@ -176,7 +176,6 @@ function Dialog({ children, size = "medium", onClose }: DialogProps) {
   );
 
   return (
-    // biome-ignore lint/a11y/noStaticElementInteractions: Terminal UI - not web DOM
     <box
       alignItems="center"
       backgroundColor={RGBA.fromInts(0, 0, 0, 150)}
@@ -188,7 +187,6 @@ function Dialog({ children, size = "medium", onClose }: DialogProps) {
       top={0}
       width={dimensions.width}
     >
-      {/* biome-ignore lint/a11y/noStaticElementInteractions: Terminal UI - not web DOM */}
       <box
         backgroundColor={theme.backgroundPanel}
         maxWidth={dimensions.width - 2}

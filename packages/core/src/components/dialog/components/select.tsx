@@ -225,6 +225,7 @@ export function DialogSelect<T>({
     [dialog, onSelect]
   );
 
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex keyboard navigation logic
   useKeyboard((evt) => {
     if (evt.name === "up" || (evt.ctrl && evt.name === "p")) {
       evt.preventDefault?.();
@@ -327,8 +328,6 @@ export function DialogSelect<T>({
                 const isCurrent = isDeepEqual(option.value, current);
 
                 return (
-                  /* biome-ignore lint/a11y/noStaticElementInteractions: Terminal UI - not web DOM */
-                  /* biome-ignore lint/a11y/useKeyWithMouseEvents: Terminal UI - keyboard handled separately */
                   <box
                     backgroundColor={
                       active ? (option.bg ?? theme.primary) : undefined

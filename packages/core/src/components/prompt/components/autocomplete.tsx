@@ -385,6 +385,7 @@ export function Autocomplete({
       get triggerIndex() {
         return state.triggerIndex;
       },
+      // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex autocomplete input handling
       onInput(inputValue: string, offset: number) {
         if (state.visible) {
           if (
@@ -441,6 +442,7 @@ export function Autocomplete({
           }
         }
       },
+      // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex keyboard event handling for autocomplete
       onKeyDown(e: KeyEvent): boolean {
         if (!state.visible) {
           const input = textareaRef.current;
@@ -562,8 +564,6 @@ export function Autocomplete({
           filteredOptions
             .slice(0, MAX_VISIBLE_ITEMS * 2)
             .map((option, index) => (
-              // biome-ignore lint/a11y/noStaticElementInteractions: TUI component with keyboard nav handled by parent
-              // biome-ignore lint/a11y/useKeyWithMouseEvents: TUI component with keyboard nav handled by parent
               <box
                 backgroundColor={
                   index === state.selectedIndex ? theme.primary : undefined

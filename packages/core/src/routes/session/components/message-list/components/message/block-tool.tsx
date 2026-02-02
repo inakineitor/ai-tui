@@ -31,8 +31,6 @@ export function BlockTool({
   };
 
   return (
-    // biome-ignore lint/a11y/useKeyWithMouseEvents: TUI box component doesn't support keyboard focus
-    // biome-ignore lint/a11y/noStaticElementInteractions: TUI box is inherently static without role support
     <box
       backgroundColor={hover ? theme.backgroundElement : theme.backgroundPanel}
       border={["left"]}

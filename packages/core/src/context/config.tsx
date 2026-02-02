@@ -52,6 +52,7 @@ export function useConfig(): Config {
 /**
  * Convenience hook to access just the agents array.
  */
+// biome-ignore lint/suspicious/noExplicitAny: Generic return type - actual types determined at runtime
 export function useAgents(): Agent<any, any, any, any>[] {
   return useConfig().agents;
 }

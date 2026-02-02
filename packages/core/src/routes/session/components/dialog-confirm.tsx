@@ -60,8 +60,6 @@ export function DialogConfirm({
     <DialogBox title={title}>
       <text fg={theme.textMuted}>{message}</text>
       <box flexDirection="row" gap={1} justifyContent="flex-end" paddingTop={1}>
-        {/* biome-ignore lint/a11y/noStaticElementInteractions: Terminal UI button */}
-        {/* biome-ignore lint/a11y/useKeyWithMouseEvents: Keyboard handled separately */}
         <box
           backgroundColor={
             selected === "cancel" ? theme.textMuted : theme.background
@@ -81,8 +79,6 @@ export function DialogConfirm({
             {cancelLabel}
           </text>
         </box>
-        {/* biome-ignore lint/a11y/noStaticElementInteractions: Terminal UI button */}
-        {/* biome-ignore lint/a11y/useKeyWithMouseEvents: Keyboard handled separately */}
         <box
           backgroundColor={
             selected === "confirm" ? theme.primary : theme.background

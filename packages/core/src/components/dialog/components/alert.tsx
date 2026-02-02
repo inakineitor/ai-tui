@@ -34,7 +34,6 @@ export function DialogAlert({ title, message, onConfirm }: DialogAlertProps) {
     <DialogBox title={title}>
       <text fg={theme.textMuted}>{message}</text>
       <box flexDirection="row" justifyContent="flex-end" paddingTop={1}>
-        {/* biome-ignore lint/a11y/noStaticElementInteractions: Terminal UI button */}
         <box
           backgroundColor={theme.primary}
           onMouseUp={handleConfirm}

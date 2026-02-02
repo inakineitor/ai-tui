@@ -498,6 +498,7 @@ export function Prompt({
   );
 
   // Submit handler
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex form submission logic
   const handleSubmit = useCallback(() => {
     const textarea = textareaRef.current;
     if (!textarea || disabled) {
@@ -571,6 +572,7 @@ export function Prompt({
   ]);
 
   const handleKeyDown = useCallback(
+    // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex keyboard event handling
     async (e: KeyEvent) => {
       if (disabled) {
         e.preventDefault?.();
@@ -736,6 +738,7 @@ export function Prompt({
   }, [updateAutocompleteOptions]);
 
   const handlePaste = useCallback(
+    // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex paste event handling with file detection
     async (event: PasteEvent) => {
       const textarea = textareaRef.current;
       if (disabled) {

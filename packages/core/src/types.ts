@@ -188,10 +188,15 @@ export class Agent<
  * Base config properties shared between input and resolved types.
  */
 type ConfigBase<
+  // biome-ignore lint/suspicious/noExplicitAny: Generic type constraints require any for flexibility
   TAgents extends readonly Agent<any, any, any, any>[] = Agent<
+    // biome-ignore lint/suspicious/noExplicitAny: Generic default type parameter
     any,
+    // biome-ignore lint/suspicious/noExplicitAny: Generic default type parameter
     any,
+    // biome-ignore lint/suspicious/noExplicitAny: Generic default type parameter
     any,
+    // biome-ignore lint/suspicious/noExplicitAny: Generic default type parameter
     any
   >[],
 > = {
@@ -213,10 +218,15 @@ type ConfigBase<
  * @template TAgents - The array type of agents, preserving their specific type parameters
  */
 export type ConfigInput<
+  // biome-ignore lint/suspicious/noExplicitAny: Generic type constraints require any for flexibility
   TAgents extends readonly Agent<any, any, any, any>[] = Agent<
+    // biome-ignore lint/suspicious/noExplicitAny: Generic default type parameter
     any,
+    // biome-ignore lint/suspicious/noExplicitAny: Generic default type parameter
     any,
+    // biome-ignore lint/suspicious/noExplicitAny: Generic default type parameter
     any,
+    // biome-ignore lint/suspicious/noExplicitAny: Generic default type parameter
     any
   >[],
 > = ConfigBase<TAgents> & {
@@ -233,10 +243,15 @@ export type ConfigInput<
  * @template TAgents - The array type of agents, preserving their specific type parameters
  */
 export type Config<
+  // biome-ignore lint/suspicious/noExplicitAny: Generic type constraints require any for flexibility
   TAgents extends readonly Agent<any, any, any, any>[] = Agent<
+    // biome-ignore lint/suspicious/noExplicitAny: Generic default type parameter
     any,
+    // biome-ignore lint/suspicious/noExplicitAny: Generic default type parameter
     any,
+    // biome-ignore lint/suspicious/noExplicitAny: Generic default type parameter
     any,
+    // biome-ignore lint/suspicious/noExplicitAny: Generic default type parameter
     any
   >[],
 > = ConfigBase<TAgents> & {
