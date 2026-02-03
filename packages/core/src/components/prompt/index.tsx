@@ -10,6 +10,9 @@
  * - Prompt stashing
  */
 
+import { readFile, stat } from "node:fs/promises";
+import { basename } from "node:path";
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type {
@@ -19,6 +22,7 @@ import type {
   TextareaRenderable,
 } from "@opentui/core";
 import { useKeyboard, useRenderer } from "@opentui/react";
+import { lookup as lookupMimeType } from "mime-types";
 
 import { useAgent } from "#context/agent.tsx";
 import { useCommand } from "#context/command.tsx";
@@ -50,16 +54,6 @@ import type {
   Segment,
 } from "./lib/types.ts";
 import { isImageMime } from "./lib/types.ts";
-
-declare const Bun: {
-  file: (path: string) => {
-    exists: () => Promise<boolean>;
-    arrayBuffer: () => Promise<ArrayBuffer>;
-    text: () => Promise<string>;
-    type: string;
-    name?: string;
-  };
-};
 
 const URL_REGEX = /^https?:\/\//;
 const WHITESPACE_SPLIT_REGEX = /\s+/;
@@ -768,32 +762,35 @@ export function Prompt({
 
       if (!isUrl) {
         try {
-          const file = Bun.file(filepath);
+          // Check if file exists
+          await stat(filepath);
+          const mimeType =
+            lookupMimeType(filepath) || "application/octet-stream";
+          const fileName = basename(filepath);
 
           // Handle SVG as raw text content, not as base64 image
-          if (file.type === "image/svg+xml") {
+          if (mimeType === "image/svg+xml") {
             event.preventDefault?.();
-            const content = await file.text().catch(() => {
+            const content = await readFile(filepath, "utf-8").catch(() => {
               /* file read failed */
             });
             if (content) {
-              pasteTextWithBadge(content, `[SVG: ${file.name ?? "image"}]`);
+              pasteTextWithBadge(content, `[SVG: ${fileName}]`);
               return;
             }
           }
 
-          if (file.type.startsWith("image/")) {
+          if (mimeType.startsWith("image/")) {
             event.preventDefault?.();
-            const content = await file
-              .arrayBuffer()
-              .then((buffer) => Buffer.from(buffer).toString("base64"))
+            const content = await readFile(filepath)
+              .then((buffer) => buffer.toString("base64"))
               .catch(() => {
                 /* file read failed */
               });
             if (content) {
               await pasteImage({
-                filename: file.name ?? filepath.split("/").pop(),
-                mime: file.type,
+                filename: fileName,
+                mime: mimeType,
                 content,
               });
               return;

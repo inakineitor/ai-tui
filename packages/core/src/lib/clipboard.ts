@@ -1,8 +1,11 @@
+import { spawn } from "node:child_process";
+import { readFile, rm, writeFile } from "node:fs/promises";
 import { platform, release, tmpdir } from "node:os";
 import path from "node:path";
-import { $ } from "bun";
 
 import clipboardy from "clipboardy";
+import { execa } from "execa";
+import which from "which";
 
 /**
  * Lazy evaluation utility - caches the result of a function on first call.
@@ -41,35 +44,52 @@ export type ClipboardContent = {
   mime: string;
 };
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Multi-platform clipboard reading requires handling Darwin, Windows/WSL, and Linux with different tools
 async function read(): Promise<ClipboardContent | undefined> {
   const os = platform();
 
   if (os === "darwin") {
     const tmpfile = path.join(tmpdir(), "ai-sdk-tui-clipboard.png");
     try {
-      await $`osascript -e 'set imageData to the clipboard as "PNGf"' -e 'set fileRef to open for access POSIX file "${tmpfile}" with write permission' -e 'set eof fileRef to 0' -e 'write imageData to fileRef' -e 'close access fileRef'`
-        .nothrow()
-        .quiet();
-      const file = Bun.file(tmpfile);
-      const buffer = await file.arrayBuffer();
-      return {
-        data: Buffer.from(buffer).toString("base64"),
-        mime: "image/png",
-      };
+      await execa("osascript", [
+        "-e",
+        'set imageData to the clipboard as "PNGf"',
+        "-e",
+        `set fileRef to open for access POSIX file "${tmpfile}" with write permission`,
+        "-e",
+        "set eof fileRef to 0",
+        "-e",
+        "write imageData to fileRef",
+        "-e",
+        "close access fileRef",
+      ]).catch(() => {
+        /* osascript failed */
+      });
+      const buffer = await readFile(tmpfile);
+      if (buffer.length > 0) {
+        return {
+          data: buffer.toString("base64"),
+          mime: "image/png",
+        };
+      }
     } catch {
       // No image in clipboard or osascript failed
     } finally {
-      await $`rm -f "${tmpfile}"`.nothrow().quiet();
+      await rm(tmpfile, { force: true }).catch(() => {
+        /* ignore cleanup errors */
+      });
     }
   }
 
   if (os === "win32" || release().includes("WSL")) {
     const script =
       "Add-Type -AssemblyName System.Windows.Forms; $img = [System.Windows.Forms.Clipboard]::GetImage(); if ($img) { $ms = New-Object System.IO.MemoryStream; $img.Save($ms, [System.Drawing.Imaging.ImageFormat]::Png); [System.Convert]::ToBase64String($ms.ToArray()) }";
-    const base64 =
-      await $`powershell.exe -NonInteractive -NoProfile -command "${script}"`
-        .nothrow()
-        .text();
+    const result = await execa(
+      "powershell.exe",
+      ["-NonInteractive", "-NoProfile", "-command", script],
+      { reject: false }
+    );
+    const base64 = result.stdout;
     if (base64) {
       const imageBuffer = Buffer.from(base64.trim(), "base64");
       if (imageBuffer.length > 0) {
@@ -79,18 +99,27 @@ async function read(): Promise<ClipboardContent | undefined> {
   }
 
   if (os === "linux") {
-    const wayland = await $`wl-paste -t image/png`.nothrow().arrayBuffer();
-    if (wayland && wayland.byteLength > 0) {
+    const waylandResult = await execa("wl-paste", ["-t", "image/png"], {
+      reject: false,
+      encoding: "buffer",
+    });
+    if (waylandResult.stdout && waylandResult.stdout.length > 0) {
       return {
-        data: Buffer.from(wayland).toString("base64"),
+        data: Buffer.from(waylandResult.stdout).toString("base64"),
         mime: "image/png",
       };
     }
-    const x11 = await $`xclip -selection clipboard -t image/png -o`
-      .nothrow()
-      .arrayBuffer();
-    if (x11 && x11.byteLength > 0) {
-      return { data: Buffer.from(x11).toString("base64"), mime: "image/png" };
+
+    const x11Result = await execa(
+      "xclip",
+      ["-selection", "clipboard", "-t", "image/png", "-o"],
+      { reject: false, encoding: "buffer" }
+    );
+    if (x11Result.stdout && x11Result.stdout.length > 0) {
+      return {
+        data: Buffer.from(x11Result.stdout).toString("base64"),
+        mime: "image/png",
+      };
     }
   }
 
@@ -102,59 +131,56 @@ async function read(): Promise<ClipboardContent | undefined> {
   }
 }
 
+/**
+ * Helper to spawn a process with stdin pipe and write data to it.
+ */
+function spawnWithStdin(
+  command: string,
+  args: string[],
+  data: string
+): Promise<void> {
+  return new Promise((resolve) => {
+    const proc = spawn(command, args, {
+      stdio: ["pipe", "ignore", "ignore"],
+    });
+    proc.stdin.write(data);
+    proc.stdin.end();
+    proc.on("close", () => resolve());
+    proc.on("error", () => resolve());
+  });
+}
+
 const getCopyMethod = lazy(() => {
   const os = platform();
 
-  if (os === "darwin" && Bun.which("osascript")) {
+  if (os === "darwin" && which.sync("osascript", { nothrow: true })) {
     return async (text: string) => {
       const escaped = text.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
-      await $`osascript -e 'set the clipboard to "${escaped}"'`
-        .nothrow()
-        .quiet();
+      await execa("osascript", ["-e", `set the clipboard to "${escaped}"`], {
+        reject: false,
+      }).catch(() => {
+        /* ignored */
+      });
     };
   }
 
   if (os === "linux") {
-    if (process.env.WAYLAND_DISPLAY && Bun.which("wl-copy")) {
+    if (
+      process.env.WAYLAND_DISPLAY &&
+      which.sync("wl-copy", { nothrow: true })
+    ) {
       return async (text: string) => {
-        const proc = Bun.spawn(["wl-copy"], {
-          stdin: "pipe",
-          stdout: "ignore",
-          stderr: "ignore",
-        });
-        proc.stdin.write(text);
-        proc.stdin.end();
-        await proc.exited.catch(() => {
-          /* ignored */
-        });
+        await spawnWithStdin("wl-copy", [], text);
       };
     }
-    if (Bun.which("xclip")) {
+    if (which.sync("xclip", { nothrow: true })) {
       return async (text: string) => {
-        const proc = Bun.spawn(["xclip", "-selection", "clipboard"], {
-          stdin: "pipe",
-          stdout: "ignore",
-          stderr: "ignore",
-        });
-        proc.stdin.write(text);
-        proc.stdin.end();
-        await proc.exited.catch(() => {
-          /* ignored */
-        });
+        await spawnWithStdin("xclip", ["-selection", "clipboard"], text);
       };
     }
-    if (Bun.which("xsel")) {
+    if (which.sync("xsel", { nothrow: true })) {
       return async (text: string) => {
-        const proc = Bun.spawn(["xsel", "--clipboard", "--input"], {
-          stdin: "pipe",
-          stdout: "ignore",
-          stderr: "ignore",
-        });
-        proc.stdin.write(text);
-        proc.stdin.end();
-        await proc.exited.catch(() => {
-          /* ignored */
-        });
+        await spawnWithStdin("xsel", ["--clipboard", "--input"], text);
       };
     }
   }
@@ -162,26 +188,16 @@ const getCopyMethod = lazy(() => {
   if (os === "win32") {
     return async (text: string) => {
       // Pipe via stdin to avoid PowerShell string interpolation ($env:FOO, $(), etc.)
-      const proc = Bun.spawn(
+      await spawnWithStdin(
+        "powershell.exe",
         [
-          "powershell.exe",
           "-NonInteractive",
           "-NoProfile",
           "-Command",
           "[Console]::InputEncoding = [System.Text.Encoding]::UTF8; Set-Clipboard -Value ([Console]::In.ReadToEnd())",
         ],
-        {
-          stdin: "pipe",
-          stdout: "ignore",
-          stderr: "ignore",
-        }
+        text
       );
-
-      proc.stdin.write(text);
-      proc.stdin.end();
-      await proc.exited.catch(() => {
-        /* ignored */
-      });
     };
   }
 
