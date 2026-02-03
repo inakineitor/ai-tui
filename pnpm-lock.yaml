@@ -32,9 +32,9 @@ importers:
       '@ai-tui/components':
         specifier: workspace:*
         version: link:../../packages/components
-      '@ai-tui/core-old':
+      '@ai-tui/docs-components':
         specifier: workspace:*
-        version: link:../../packages/core-old
+        version: link:../../packages/docs-components
       next:
         specifier: 16.0.10
         version: 16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -165,7 +165,7 @@ importers:
         specifier: ^5
         version: 5.5.4
 
-  packages/core-old:
+  packages/docs-components:
     dependencies:
       react:
         specifier: ^19.0.0
