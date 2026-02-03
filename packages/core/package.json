@@ -1,6 +1,6 @@
 {
   "name": "@ai-tui/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Build AI agent terminal UIs with the Vercel AI SDK",
   "type": "module",
   "imports": {
