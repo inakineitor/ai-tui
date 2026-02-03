@@ -1,12 +1,16 @@
 import { type ReactNode, useMemo } from "react";
 
 import figlet from "figlet";
+import ansiShadowFont from "figlet/importable-fonts/ANSI Shadow.js";
 
 import { useAppName } from "#context/config.js";
 import { useTheme } from "#context/theme/index.js";
 import type { TitleSection } from "#types.js";
 
 import { DEFAULT_GRADIENT_COLORS, getGradientColor } from "./lib/gradient.js";
+
+// Register the pre-parsed font (avoids filesystem access at runtime)
+figlet.parseFont("ANSI Shadow", ansiShadowFont);
 
 /** Default separator between sections (4 spaces) */
 const DEFAULT_SEPARATOR = "    ";
