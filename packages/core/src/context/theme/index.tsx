@@ -630,7 +630,7 @@ export function ThemeProvider({
   children,
   initialMode = DEFAULT_MODE,
   initialPreset = DEFAULT_PRESET,
-}: ThemeProviderProps): JSX.Element {
+}: ThemeProviderProps) {
   const kv = useKV();
   const [allThemes, setAllThemes] = useState<Map<string, ThemeEntry>>(themes);
   const [themesLoaded, setThemesLoaded] = useState(false);
