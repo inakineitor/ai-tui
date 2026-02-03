@@ -9,6 +9,15 @@
     "rules": {
       "correctness": {
         "noUnusedImports": "off"
+      },
+      "style": {
+        "useConsistentTypeDefinitions": {
+          "level": "error",
+          "options": {
+            "style": "type"
+          }
+        },
+        "noNestedTernary": "off"
       }
     }
   },

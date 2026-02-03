@@ -1,8 +1,12 @@
 {
-  "extends": "@ai-tui/tsconfig/react-library.json",
-  "include": ["."],
-  "exclude": ["dist", "build", "node_modules"],
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@ai-tui/tsconfig/opentui-library.json",
   "compilerOptions": {
-    "strictNullChecks": true
-  }
+    "declaration": true,
+    "declarationMap": true,
+    "composite": false,
+    "inlineSources": false,
+    "preserveWatchOutput": true
+  },
+  "exclude": ["node_modules"]
 }

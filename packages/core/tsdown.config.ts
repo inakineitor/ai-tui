@@ -1,15 +1,8 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
-  entry: {
-    index: "src/index.tsx",
-  },
-  banner: {
-    js: "'use client'",
-  },
+  entry: ["src/index.ts"],
   format: ["cjs", "esm"],
-  external: ["react"],
   dts: true,
-  clean: false,
-  target: false,
+  clean: true,
 });

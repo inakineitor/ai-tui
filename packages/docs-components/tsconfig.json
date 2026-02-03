@@ -1,0 +1,8 @@
+{
+  "extends": "@ai-tui/tsconfig/react-library.json",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"],
+  "compilerOptions": {
+    "strictNullChecks": true
+  }
+}

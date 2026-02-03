@@ -12,17 +12,17 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next"
   },
   "dependencies": {
-    "@ai-tui/core": "workspace:*",
+    "@ai-tui/docs-components": "workspace:*",
     "@ai-tui/components": "workspace:*",
     "next": "16.0.10",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@ai-tui/tsconfig": "workspace:*",
     "@types/node": "^20.11.24",
-    "@types/react": "^18.2.61",
-    "@types/react-dom": "^18.2.19",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "typescript": "5.5.4"
   }
 }
