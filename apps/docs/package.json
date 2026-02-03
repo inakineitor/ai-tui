@@ -12,8 +12,6 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next"
   },
   "dependencies": {
-    "@ai-tui/docs-components": "workspace:*",
-    "@ai-tui/components": "workspace:*",
     "next": "16.0.10",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
