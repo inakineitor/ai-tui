@@ -73,6 +73,8 @@ export {
   resolveTheme,
   vercelTheme,
 } from "./context/theme/index.js";
+// Message queue types (used by QueuedUserMessage component)
+export type { FileUIPart, QueuedMessage } from "./hooks/use-message-queue.js";
 // Tool renderer base components
 export {
   BlockTool,
