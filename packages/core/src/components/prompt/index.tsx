@@ -24,27 +24,27 @@ import type {
 import { useKeyboard, useRenderer } from "@opentui/react";
 import { lookup as lookupMimeType } from "mime-types";
 
-import { useAgent } from "#context/agent.tsx";
-import { useCommand } from "#context/command.tsx";
-import { useSubagents } from "#context/config.tsx";
-import { useKeybind } from "#context/keybind.tsx";
-import { useFrecency, useHistory, useStash } from "#context/prompt.tsx";
-import { useTheme } from "#context/theme/index.tsx";
-import type { FileUIPart } from "#hooks/use-message-queue.ts";
-import { Clipboard } from "#lib/clipboard.ts";
+import { useAgent } from "#context/agent.js";
+import { useCommand } from "#context/command.js";
+import { useSubagents } from "#context/config.js";
+import { useKeybind } from "#context/keybind.js";
+import { useFrecency, useHistory, useStash } from "#context/prompt.js";
+import { useTheme } from "#context/theme/index.js";
+import type { FileUIPart } from "#hooks/use-message-queue.js";
+import { Clipboard } from "#lib/clipboard.js";
 
-import { EmptyBorder } from "../border.ts";
+import { EmptyBorder } from "../border.js";
 import {
   Autocomplete,
   type AutocompleteRef,
-} from "./components/autocomplete.tsx";
-import { StreamingIndicator } from "./components/spinner/index.tsx";
+} from "./components/autocomplete.js";
+import { StreamingIndicator } from "./components/spinner/index.js";
 import {
   buildFileUrl,
   extractLineRange,
   searchFiles,
   truncateMiddle,
-} from "./lib/file-search.ts";
+} from "./lib/file-search.js";
 import type {
   AgentPart,
   AutocompleteOption,
@@ -52,8 +52,8 @@ import type {
   PromptInfo,
   PromptPart,
   Segment,
-} from "./lib/types.ts";
-import { isImageMime } from "./lib/types.ts";
+} from "./lib/types.js";
+import { isImageMime } from "./lib/types.js";
 
 const URL_REGEX = /^https?:\/\//;
 const WHITESPACE_SPLIT_REGEX = /\s+/;
@@ -1066,13 +1066,13 @@ export function Prompt({
 
 // Re-export utilities
 // biome-ignore lint/performance/noBarrelFile: Intentional barrel export for module organization
-export { createFrecencyTracker } from "./lib/frecency.ts";
-export { createHistory } from "./lib/history.ts";
-export { createStash } from "./lib/stash.ts";
+export { createFrecencyTracker } from "./lib/frecency.js";
+export { createHistory } from "./lib/history.js";
+export { createStash } from "./lib/stash.js";
 // Re-export types
 export type {
   AutocompleteOption,
   FilePart,
   PromptInfo,
   PromptPart,
-} from "./lib/types.ts";
+} from "./lib/types.js";

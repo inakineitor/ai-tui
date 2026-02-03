@@ -1,5 +1,5 @@
-import { InlineTool } from "./inline-tool.tsx";
-import type { ToolRendererProps } from "./types.ts";
+import { InlineTool } from "./inline-tool.js";
+import type { ToolRendererProps } from "./types.js";
 
 /**
  * Format tool input arguments for display

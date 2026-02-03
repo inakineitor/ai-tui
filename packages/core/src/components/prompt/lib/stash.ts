@@ -6,7 +6,7 @@
 import { appendFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import type { PromptPart, StashEntry } from "./types.ts";
+import type { PromptPart, StashEntry } from "./types.js";
 
 const MAX_STASH_ENTRIES = 50;
 const STASH_FILENAME = "prompt-stash.jsonl";

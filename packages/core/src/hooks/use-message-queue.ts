@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import type { Agent, AgentMetadata } from "#types.ts";
+import type { Agent, AgentMetadata } from "#types.js";
 
 export type FileUIPart = {
   type: "file";

@@ -5,11 +5,11 @@ import {
 } from "@opentui/core";
 import { createRoot } from "@opentui/react";
 
-import { App } from "#app.tsx";
-import { detectTerminalMode } from "#lib/detect-terminal-mode.ts";
-import { type KVStore, createKV } from "#lib/kv.ts";
-import { getConfigDir, getDataDir } from "#lib/paths.ts";
-import type { ConfigInput } from "#types.ts";
+import { App } from "#app.js";
+import { detectTerminalMode } from "#lib/detect-terminal-mode.js";
+import { type KVStore, createKV } from "#lib/kv.js";
+import { getConfigDir, getDataDir } from "#lib/paths.js";
+import type { ConfigInput } from "#types.js";
 
 export type { CliRendererConfig } from "@opentui/core";
 
@@ -25,7 +25,7 @@ const DEFAULT_RENDER_OPTIONS: CliRendererConfig = {
  * @example
  * ```typescript
  * import { TerminalUI } from "@ai-sdk-tui/core";
- * import { configValue } from "./config.tsx";
+ * import { configValue } from "./config.js";
  *
  * const tui = new TerminalUI(configValue);
  * await tui.run();

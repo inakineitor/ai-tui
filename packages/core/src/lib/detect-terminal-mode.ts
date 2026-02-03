@@ -1,4 +1,4 @@
-import type { ThemeMode } from "#context/theme/index.tsx";
+import type { ThemeMode } from "#context/theme/index.js";
 
 // Regex to match OSC 11 response: ESC ] 11 ; <color> BEL
 // biome-ignore lint/suspicious/noControlCharactersInRegex: Control characters are required to match terminal escape sequences

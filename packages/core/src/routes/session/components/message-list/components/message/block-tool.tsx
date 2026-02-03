@@ -1,6 +1,6 @@
 import { type ReactNode, useState } from "react";
 
-import { useTheme } from "#context/theme/index.tsx";
+import { useTheme } from "#context/theme/index.js";
 
 type BlockToolProps = {
   title: string;

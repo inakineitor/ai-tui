@@ -1,9 +1,9 @@
 import { useKeyboard } from "@opentui/react";
 
-import { useTheme } from "#context/theme/index.tsx";
+import { useTheme } from "#context/theme/index.js";
 
-import { type DialogContextValue, useDialog } from "../context.tsx";
-import { DialogBox } from "./dialog-box.tsx";
+import { type DialogContextValue, useDialog } from "../context.js";
+import { DialogBox } from "./dialog-box.js";
 
 type DialogAlertProps = {
   title: string;

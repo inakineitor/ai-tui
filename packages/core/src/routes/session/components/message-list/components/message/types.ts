@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import type { ThemeColors } from "#context/theme/index.tsx";
+import type { ThemeColors } from "#context/theme/index.js";
 
 export type ToolStatus = "pending" | "running" | "completed" | "error";
 

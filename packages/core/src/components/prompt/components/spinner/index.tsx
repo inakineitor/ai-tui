@@ -2,7 +2,7 @@ import "opentui-spinner/react";
 
 import type { ColorInput } from "@opentui/core";
 
-import { createColors, createFrames } from "./lib/spinner-utils.ts";
+import { createColors, createFrames } from "./lib/spinner-utils.js";
 
 type SpinnerProps = {
   color: ColorInput;

@@ -3,12 +3,12 @@ import type { MutableRefObject } from "react";
 import type { ScrollBoxRenderable } from "@opentui/core";
 import type { UIMessage } from "ai";
 
-import { useTheme } from "#context/theme/index.tsx";
-import type { QueuedMessage } from "#hooks/use-message-queue.ts";
-import type { AgentMetadata } from "#types.ts";
+import { useTheme } from "#context/theme/index.js";
+import type { QueuedMessage } from "#hooks/use-message-queue.js";
+import type { AgentMetadata } from "#types.js";
 
-import { Message, QueuedUserMessage } from "./components/message/index.tsx";
-import type { ToolComponentsMap } from "./components/message/types.ts";
+import { Message, QueuedUserMessage } from "./components/message/index.js";
+import type { ToolComponentsMap } from "./components/message/types.js";
 
 type MessageListProps = {
   messages: UIMessage[];

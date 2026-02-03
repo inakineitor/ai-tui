@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { useTheme } from "#context/theme/index.tsx";
+import { useTheme } from "#context/theme/index.js";
 
-import { SidebarSection } from "./section.tsx";
+import { SidebarSection } from "./section.js";
 
 export type FileItem = {
   id: string;

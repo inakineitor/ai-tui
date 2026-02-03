@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 
-import type { SessionMessage } from "#context/session.tsx";
+import type { SessionMessage } from "#context/session.js";
 
 export type MessageOperation =
   | "copy"

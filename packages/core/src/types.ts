@@ -8,7 +8,7 @@ import type {
   UIMessage,
 } from "ai";
 
-import type { ToolComponentsMap } from "#routes/session/components/message-list/index.ts";
+import type { ToolComponentsMap } from "#routes/session/components/message-list/index.js";
 
 /** Handler for elicitation requests from AI agents */
 export type ElicitationHandler = (message: string) => Promise<string>;
@@ -268,4 +268,4 @@ export type {
   ToolRendererProps,
   ToolState,
   ToolStatus,
-} from "#routes/session/components/message-list/index.ts";
+} from "#routes/session/components/message-list/index.js";

@@ -6,8 +6,8 @@ import {
   DialogBox,
   type DialogContextValue,
   useDialog,
-} from "#components/dialog/index.ts";
-import { useTheme } from "#context/theme/index.tsx";
+} from "#components/dialog/index.js";
+import { useTheme } from "#context/theme/index.js";
 
 type DialogConfirmProps = {
   title: string;

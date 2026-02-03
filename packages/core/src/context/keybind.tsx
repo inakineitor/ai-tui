@@ -12,7 +12,7 @@ import {
 import type { Renderable } from "@opentui/core";
 import { useKeyboard, useRenderer } from "@opentui/react";
 
-import { useKV } from "./kv";
+import { useKV } from "./kv.js";
 
 export type KeybindInfo = {
   name: string;

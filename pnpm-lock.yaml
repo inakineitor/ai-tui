@@ -32,9 +32,9 @@ importers:
       '@ai-tui/components':
         specifier: workspace:*
         version: link:../../packages/components
-      '@ai-tui/core':
+      '@ai-tui/core-old':
         specifier: workspace:*
-        version: link:../../packages/core
+        version: link:../../packages/core-old
       next:
         specifier: 16.0.10
         version: 16.0.10(@opentelemetry/api@1.9.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -119,6 +119,9 @@ importers:
       '@ai-sdk/react':
         specifier: ^3.0.41
         version: 3.0.70(react@19.2.4)(zod@4.3.6)
+      '@ai-tui/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@happy-dom/global-registrator':
         specifier: ^20.3.7
         version: 20.4.0

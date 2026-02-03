@@ -16,7 +16,7 @@ import {
   useTerminalDimensions,
 } from "@opentui/react";
 
-import { useTheme } from "#context/theme/index.tsx";
+import { useTheme } from "#context/theme/index.js";
 
 type DialogStackItem = {
   element: ReactNode;

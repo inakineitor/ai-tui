@@ -1,5 +1,5 @@
-import { useKeybind } from "#context/keybind.tsx";
-import { useTheme } from "#context/theme/index.tsx";
+import { useKeybind } from "#context/keybind.js";
+import { useTheme } from "#context/theme/index.js";
 
 export type FooterProps = {
   isLoading?: boolean;

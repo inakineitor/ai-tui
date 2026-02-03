@@ -1,37 +1,37 @@
 import type { ReactNode } from "react";
 
-import { GenericTool } from "../../generic.tsx";
-import type { ToolRendererProps } from "../../types.ts";
-import { ApplyPatchTool } from "./apply-patch.tsx";
-import { BashTool } from "./bash.tsx";
-import { BatchTool } from "./batch.tsx";
-import { CodeSearchTool } from "./codesearch.tsx";
-import { EditTool } from "./edit.tsx";
-import { GlobTool } from "./glob.tsx";
-import { GrepTool } from "./grep.tsx";
-import { ListTool } from "./list.tsx";
-import { LspTool } from "./lsp.tsx";
-import { MultiEditTool } from "./multiedit.tsx";
-import { PlanTool } from "./plan.tsx";
-import { QuestionTool } from "./question.tsx";
-import { ReadTool } from "./read.tsx";
-import { SkillTool } from "./skill.tsx";
-import { TaskTool } from "./task.tsx";
-import { TodoWriteTool } from "./todowrite.tsx";
-import { WebFetchTool } from "./webfetch.tsx";
-import { WebSearchTool } from "./websearch.tsx";
-import { WriteTool } from "./write.tsx";
+import { GenericTool } from "../../generic.js";
+import type { ToolRendererProps } from "../../types.js";
+import { ApplyPatchTool } from "./apply-patch.js";
+import { BashTool } from "./bash.js";
+import { BatchTool } from "./batch.js";
+import { CodeSearchTool } from "./codesearch.js";
+import { EditTool } from "./edit.js";
+import { GlobTool } from "./glob.js";
+import { GrepTool } from "./grep.js";
+import { ListTool } from "./list.js";
+import { LspTool } from "./lsp.js";
+import { MultiEditTool } from "./multiedit.js";
+import { PlanTool } from "./plan.js";
+import { QuestionTool } from "./question.js";
+import { ReadTool } from "./read.js";
+import { SkillTool } from "./skill.js";
+import { TaskTool } from "./task.js";
+import { TodoWriteTool } from "./todowrite.js";
+import { WebFetchTool } from "./webfetch.js";
+import { WebSearchTool } from "./websearch.js";
+import { WriteTool } from "./write.js";
 
 // biome-ignore lint/performance/noBarrelFile: intentional public API for tool renderers
-export { BlockTool } from "../../block-tool.tsx";
-export { InlineTool } from "../../inline-tool.tsx";
+export { BlockTool } from "../../block-tool.js";
+export { InlineTool } from "../../inline-tool.js";
 export type {
   ToolPartInfo,
   ToolRendererProps,
   ToolState,
   ToolStatus,
-} from "../../types.ts";
-export { extractToolInfo, mapAISDKState } from "../../types.ts";
+} from "../../types.js";
+export { extractToolInfo, mapAISDKState } from "../../types.js";
 
 /** Function component type for rendering tool calls */
 export type ToolRenderer = (props: ToolRendererProps) => ReactNode;

@@ -7,7 +7,7 @@
 import { appendFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 
-import type { FrecencyEntry } from "./types.ts";
+import type { FrecencyEntry } from "./types.js";
 
 const MAX_FRECENCY_ENTRIES = 1000;
 const FRECENCY_FILENAME = "frecency.jsonl";

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import { useTips } from "#context/config.tsx";
-import { useTheme } from "#context/theme/index.tsx";
+import { useTips } from "#context/config.js";
+import { useTheme } from "#context/theme/index.js";
 
 type TipPart = { text: string; highlight: boolean };
 

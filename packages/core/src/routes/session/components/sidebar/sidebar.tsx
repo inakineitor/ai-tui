@@ -1,17 +1,17 @@
-import { useTheme } from "#context/theme/index.tsx";
+import { useTheme } from "#context/theme/index.js";
 
 import {
   type ContextItem,
   SidebarSectionContext,
-} from "./components/section-context.tsx";
+} from "./components/section-context.js";
 import {
   type FileItem,
   SidebarSectionFiles,
-} from "./components/section-files.tsx";
+} from "./components/section-files.js";
 import {
   SidebarSectionTodos,
   type TodoItem,
-} from "./components/section-todos.tsx";
+} from "./components/section-todos.js";
 
 export type SidebarProps = {
   visible: boolean;

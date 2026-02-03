@@ -9,15 +9,15 @@ import {
   useState,
 } from "react";
 
-import { useKV } from "#context/kv.tsx";
-import type { AgentMetadata } from "#types.ts";
+import { useKV } from "#context/kv.js";
+import type { AgentMetadata } from "#types.js";
 
 import {
   type SessionStorage,
   type StoredMessage,
   type StoredSession,
   createSessionStorage,
-} from "../lib/session-storage";
+} from "../lib/session-storage.js";
 
 export type SessionStatus = "active" | "archived";
 

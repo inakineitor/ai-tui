@@ -6,7 +6,7 @@
 import { appendFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import type { HistoryEntry, PromptPart } from "./types.ts";
+import type { HistoryEntry, PromptPart } from "./types.js";
 
 const MAX_HISTORY_ENTRIES = 50;
 const HISTORY_FILENAME = "prompt-history.jsonl";

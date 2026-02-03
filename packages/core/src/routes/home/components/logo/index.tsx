@@ -2,11 +2,11 @@ import { type ReactNode, useMemo } from "react";
 
 import figlet from "figlet";
 
-import { useAppName } from "#context/config.tsx";
-import { useTheme } from "#context/theme/index.tsx";
-import type { TitleSection } from "#types.ts";
+import { useAppName } from "#context/config.js";
+import { useTheme } from "#context/theme/index.js";
+import type { TitleSection } from "#types.js";
 
-import { DEFAULT_GRADIENT_COLORS, getGradientColor } from "./lib/gradient.ts";
+import { DEFAULT_GRADIENT_COLORS, getGradientColor } from "./lib/gradient.js";
 
 /** Default separator between sections (4 spaces) */
 const DEFAULT_SEPARATOR = "    ";

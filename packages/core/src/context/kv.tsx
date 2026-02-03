@@ -8,7 +8,7 @@ import {
   useSyncExternalStore,
 } from "react";
 
-import type { KVStore } from "#lib/kv.ts";
+import type { KVStore } from "#lib/kv.js";
 
 const KVContext = createContext<KVStore | null>(null);
 

@@ -12,7 +12,7 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next"
   },
   "dependencies": {
-    "@ai-tui/core": "workspace:*",
+    "@ai-tui/core-old": "workspace:*",
     "@ai-tui/components": "workspace:*",
     "next": "16.0.10",
     "react": "^19.0.0",

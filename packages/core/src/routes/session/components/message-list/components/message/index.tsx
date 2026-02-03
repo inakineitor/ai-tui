@@ -1,15 +1,15 @@
 import type { UIMessage } from "ai";
 
-import { useKVSignal } from "#context/kv.tsx";
-import { useTheme } from "#context/theme/index.tsx";
-import type { QueuedMessage } from "#hooks/use-message-queue.ts";
-import type { AgentMetadata } from "#types.ts";
+import { useKVSignal } from "#context/kv.js";
+import { useTheme } from "#context/theme/index.js";
+import type { QueuedMessage } from "#hooks/use-message-queue.js";
+import type { AgentMetadata } from "#types.js";
 
 import {
   extractToolInfo,
   getToolRenderer,
-} from "./components/tool-renderers/index.tsx";
-import type { ToolComponentsMap } from "./types.ts";
+} from "./components/tool-renderers/index.js";
+import type { ToolComponentsMap } from "./types.js";
 
 function formatTimestamp(date: Date | number): string {
   const d = date instanceof Date ? date : new Date(date);

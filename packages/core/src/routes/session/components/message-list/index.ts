@@ -9,7 +9,7 @@ export {
   extractToolInfo,
   getToolRenderer,
   mapAISDKState,
-} from "./components/message/components/tool-renderers/index.tsx";
-export { Message, QueuedUserMessage } from "./components/message/index.tsx";
-export type { ToolComponentsMap } from "./components/message/types.ts";
-export { MessageList } from "./message-list.tsx";
+} from "./components/message/components/tool-renderers/index.js";
+export { Message, QueuedUserMessage } from "./components/message/index.js";
+export type { ToolComponentsMap } from "./components/message/types.js";
+export { MessageList } from "./message-list.js";

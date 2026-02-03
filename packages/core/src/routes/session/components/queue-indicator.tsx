@@ -1,5 +1,5 @@
-import { useTheme } from "#context/theme/index.tsx";
-import type { QueuedMessage } from "#hooks/use-message-queue.ts";
+import { useTheme } from "#context/theme/index.js";
+import type { QueuedMessage } from "#hooks/use-message-queue.js";
 
 // function truncate(text: string, maxLength: number): string {
 //   if (text.length <= maxLength) {

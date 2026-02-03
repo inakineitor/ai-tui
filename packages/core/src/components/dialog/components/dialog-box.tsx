@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { TextAttributes } from "@opentui/core";
 
-import { useTheme } from "#context/theme/index.tsx";
+import { useTheme } from "#context/theme/index.js";
 
 type DialogBoxProps = {
   children: ReactNode;

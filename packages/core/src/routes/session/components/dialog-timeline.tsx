@@ -3,8 +3,8 @@ import { useMemo, useState } from "react";
 import { useKeyboard } from "@opentui/react";
 import type { UIMessage } from "ai";
 
-import { DialogBox, useDialog } from "#components/dialog/index.ts";
-import { useTheme } from "#context/theme/index.tsx";
+import { DialogBox, useDialog } from "#components/dialog/index.js";
+import { useTheme } from "#context/theme/index.js";
 
 const TOOL_PREFIX_REGEX = /^tool-/;
 

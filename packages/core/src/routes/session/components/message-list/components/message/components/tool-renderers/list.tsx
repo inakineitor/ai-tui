@@ -2,8 +2,8 @@ import path from "node:path";
 
 import { useMemo } from "react";
 
-import { InlineTool } from "../../inline-tool.tsx";
-import type { ToolRendererProps } from "../../types.ts";
+import { InlineTool } from "../../inline-tool.js";
+import type { ToolRendererProps } from "../../types.js";
 
 function normalizePath(input?: string): string {
   if (!input) {

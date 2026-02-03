@@ -1,4 +1,4 @@
-import { Button } from "@ai-tui/core";
+import { Button } from "@ai-tui/core-old";
 
 export default function Page() {
   return (

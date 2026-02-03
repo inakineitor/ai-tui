@@ -24,11 +24,11 @@ import {
 import {
   type FrecencyTracker,
   createFrecencyTracker,
-} from "#components/prompt/lib/frecency.ts";
-import { type History, createHistory } from "#components/prompt/lib/history.ts";
-import { type Stash, createStash } from "#components/prompt/lib/stash.ts";
-import type { HistoryEntry, StashEntry } from "#components/prompt/lib/types.ts";
-import { useKV } from "#context/kv.tsx";
+} from "#components/prompt/lib/frecency.js";
+import { type History, createHistory } from "#components/prompt/lib/history.js";
+import { type Stash, createStash } from "#components/prompt/lib/stash.js";
+import type { HistoryEntry, StashEntry } from "#components/prompt/lib/types.js";
+import { useKV } from "#context/kv.js";
 
 // =============================================================================
 // History Context

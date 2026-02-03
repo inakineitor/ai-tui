@@ -9,8 +9,8 @@ import {
 
 import { RGBA } from "@opentui/core";
 
-import { useAgents, useSubagents } from "#context/config.tsx";
-import type { Agent } from "#types.ts";
+import { useAgents, useSubagents } from "#context/config.js";
+import type { Agent } from "#types.js";
 
 type AgentContextValue = {
   selectedAgentIndex: number;

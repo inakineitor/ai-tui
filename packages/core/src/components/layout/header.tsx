@@ -1,5 +1,5 @@
-import { useSession } from "#context/session.tsx";
-import { useTheme } from "#context/theme/index.tsx";
+import { useSession } from "#context/session.js";
+import { useTheme } from "#context/theme/index.js";
 
 export type HeaderProps = {
   showSessionInfo?: boolean;

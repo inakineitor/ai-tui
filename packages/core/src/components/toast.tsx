@@ -11,9 +11,9 @@ import {
 import { TextAttributes } from "@opentui/core";
 import { useTerminalDimensions } from "@opentui/react";
 
-import { useTheme } from "#context/theme/index.tsx";
+import { useTheme } from "#context/theme/index.js";
 
-import { SplitBorder } from "./border.ts";
+import { SplitBorder } from "./border.js";
 
 export type ToastVariant = "info" | "success" | "error" | "warning";
 

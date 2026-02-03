@@ -3,20 +3,20 @@ import { useCallback, useEffect, useRef } from "react";
 import type { ScrollBoxRenderable } from "@opentui/core";
 import type { UIMessage } from "ai";
 
-import type { DialogContextValue } from "#components/dialog/index.ts";
-import { Prompt } from "#components/prompt/index.tsx";
-import { useToast } from "#components/toast.tsx";
-import { useCommand } from "#context/command.tsx";
-import { useTheme } from "#context/theme/index.tsx";
-import type { FileUIPart, QueuedMessage } from "#hooks/use-message-queue.ts";
-import { Clipboard } from "#lib/clipboard.ts";
+import type { DialogContextValue } from "#components/dialog/index.js";
+import { Prompt } from "#components/prompt/index.js";
+import { useToast } from "#components/toast.js";
+import { useCommand } from "#context/command.js";
+import { useTheme } from "#context/theme/index.js";
+import type { FileUIPart, QueuedMessage } from "#hooks/use-message-queue.js";
+import { Clipboard } from "#lib/clipboard.js";
 
-import { DialogConfirm } from "./components/dialog-confirm.tsx";
-import { DialogTimeline } from "./components/dialog-timeline.tsx";
-import type { ToolComponentsMap } from "./components/message-list/components/message/types.ts";
-import { MessageList } from "./components/message-list/index.ts";
-import { QueueIndicator } from "./components/queue-indicator.tsx";
-import { Sidebar } from "./components/sidebar/index.ts";
+import { DialogConfirm } from "./components/dialog-confirm.js";
+import { DialogTimeline } from "./components/dialog-timeline.js";
+import type { ToolComponentsMap } from "./components/message-list/components/message/types.js";
+import { MessageList } from "./components/message-list/index.js";
+import { QueueIndicator } from "./components/queue-indicator.js";
+import { Sidebar } from "./components/sidebar/index.js";
 
 type SessionProps = {
   directory: string;

@@ -2,7 +2,7 @@ import { exec } from "node:child_process";
 
 import type { ReactNode } from "react";
 
-import { useTheme } from "#context/theme/index.tsx";
+import { useTheme } from "#context/theme/index.js";
 
 type LinkProps = {
   href: string;

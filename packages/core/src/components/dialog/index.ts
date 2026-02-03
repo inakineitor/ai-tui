@@ -1,17 +1,17 @@
 // biome-ignore lint/performance/noBarrelFile: intentional public API for dialogs
-export { DialogAlert } from "./components/alert.tsx";
-export { type CommandOption, DialogCommand } from "./components/command.tsx";
-export { DialogBox } from "./components/dialog-box.tsx";
-export { DialogHelp } from "./components/help.tsx";
+export { DialogAlert } from "./components/alert.js";
+export { type CommandOption, DialogCommand } from "./components/command.js";
+export { DialogBox } from "./components/dialog-box.js";
+export { DialogHelp } from "./components/help.js";
 export {
   DialogSelect,
   type DialogSelectKeybind,
   type DialogSelectOption,
   type DialogSelectRef,
-} from "./components/select.tsx";
-export { DialogSessionList } from "./components/session-list.tsx";
+} from "./components/select.js";
+export { DialogSessionList } from "./components/session-list.js";
 export {
   type DialogContextValue,
   DialogProvider,
   useDialog,
-} from "./context.tsx";
+} from "./context.js";

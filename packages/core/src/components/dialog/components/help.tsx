@@ -3,9 +3,9 @@ import { useMemo, useState } from "react";
 import { TextAttributes } from "@opentui/core";
 import { useKeyboard } from "@opentui/react";
 
-import type { KeybindAction } from "#context/keybind.tsx";
-import { useKeybind } from "#context/keybind.tsx";
-import { useTheme } from "#context/theme/index.tsx";
+import type { KeybindAction } from "#context/keybind.js";
+import { useKeybind } from "#context/keybind.js";
+import { useTheme } from "#context/theme/index.js";
 
 type KeybindCategory = {
   name: string;

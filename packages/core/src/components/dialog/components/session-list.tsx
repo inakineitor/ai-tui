@@ -1,10 +1,10 @@
 import { useCallback, useMemo, useState } from "react";
 
-import { useKeybind } from "#context/keybind.tsx";
-import { type Session, useSession } from "#context/session.tsx";
+import { useKeybind } from "#context/keybind.js";
+import { type Session, useSession } from "#context/session.js";
 
-import { useDialog } from "../context.tsx";
-import { DialogSelect, type DialogSelectOption } from "./select.tsx";
+import { useDialog } from "../context.js";
+import { DialogSelect, type DialogSelectOption } from "./select.js";
 
 type DialogSessionListProps = {
   onSelect?: (session: Session) => void;

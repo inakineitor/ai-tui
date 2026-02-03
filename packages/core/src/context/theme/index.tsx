@@ -14,7 +14,7 @@ import {
 import { RGBA, SyntaxStyle } from "@opentui/core";
 import deepmerge from "deepmerge";
 
-import { useKV } from "#context/kv.tsx";
+import { useKV } from "#context/kv.js";
 
 // Internal imports for theme registry
 import _oneDarkTheme from "./themes/one-dark.json" with { type: "json" };

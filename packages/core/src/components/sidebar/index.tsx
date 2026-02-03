@@ -1,18 +1,18 @@
 import type { ReactNode } from "react";
 
-import { useTheme } from "#context/theme/index.tsx";
+import { useTheme } from "#context/theme/index.js";
 import {
   type ContextItem,
   SidebarSectionContext,
-} from "#routes/session/components/sidebar/components/section-context.tsx";
+} from "#routes/session/components/sidebar/components/section-context.js";
 import {
   type FileItem,
   SidebarSectionFiles,
-} from "#routes/session/components/sidebar/components/section-files.tsx";
+} from "#routes/session/components/sidebar/components/section-files.js";
 import {
   SidebarSectionTodos,
   type TodoItem,
-} from "#routes/session/components/sidebar/components/section-todos.tsx";
+} from "#routes/session/components/sidebar/components/section-todos.js";
 
 export type SidebarProps = {
   visible: boolean;
@@ -86,6 +86,6 @@ export function SidebarSection({
 }
 
 // biome-ignore lint/performance/noBarrelFile: intentional public API for sidebar
-export { SidebarSectionContext } from "#routes/session/components/sidebar/components/section-context.tsx";
-export { SidebarSectionFiles } from "#routes/session/components/sidebar/components/section-files.tsx";
-export { SidebarSectionTodos } from "#routes/session/components/sidebar/components/section-todos.tsx";
+export { SidebarSectionContext } from "#routes/session/components/sidebar/components/section-context.js";
+export { SidebarSectionFiles } from "#routes/session/components/sidebar/components/section-files.js";
+export { SidebarSectionTodos } from "#routes/session/components/sidebar/components/section-todos.js";

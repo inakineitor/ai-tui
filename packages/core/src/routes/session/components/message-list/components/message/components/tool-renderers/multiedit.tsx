@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 
-import { BlockTool } from "../../block-tool.tsx";
-import { InlineTool } from "../../inline-tool.tsx";
-import type { ToolRendererProps } from "../../types.ts";
+import { BlockTool } from "../../block-tool.js";
+import { InlineTool } from "../../inline-tool.js";
+import type { ToolRendererProps } from "../../types.js";
 
 type EditOperation = {
   oldString: string;

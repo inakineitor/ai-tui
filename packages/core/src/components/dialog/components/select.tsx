@@ -11,15 +11,15 @@ import type { InputRenderable, ScrollBoxRenderable } from "@opentui/core";
 import { TextAttributes } from "@opentui/core";
 import { useKeyboard, useTerminalDimensions } from "@opentui/react";
 
-import type { KeybindInfo } from "#context/keybind.tsx";
+import type { KeybindInfo } from "#context/keybind.js";
 import {
   keybindInfoMatch,
   keybindInfoToString,
   useKeybind,
-} from "#context/keybind.tsx";
-import { useTheme } from "#context/theme/index.tsx";
+} from "#context/keybind.js";
+import { useTheme } from "#context/theme/index.js";
 
-import { type DialogContextValue, useDialog } from "../context.tsx";
+import { type DialogContextValue, useDialog } from "../context.js";
 
 export type DialogSelectOption<T> = {
   value: T;

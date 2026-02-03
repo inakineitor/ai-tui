@@ -8,7 +8,7 @@ import type {
   Config,
   ConfigInput,
   SubagentDefinition,
-} from "#types.ts";
+} from "#types.js";
 
 const DEFAULT_APP_NAME: AppName = {
   sections: [{ text: "AI SDK", style: "muted" }, { text: "Agent" }],

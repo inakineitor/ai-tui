@@ -2,14 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 
 import { useTerminalDimensions } from "@opentui/react";
 
-import { Prompt } from "#components/prompt/index.tsx";
-import { useAgents, useTips } from "#context/config.tsx";
-import { useKV } from "#context/kv.tsx";
-import { useTheme } from "#context/theme/index.tsx";
-import type { FileUIPart } from "#hooks/use-message-queue.ts";
+import { Prompt } from "#components/prompt/index.js";
+import { useAgents, useTips } from "#context/config.js";
+import { useKV } from "#context/kv.js";
+import { useTheme } from "#context/theme/index.js";
+import type { FileUIPart } from "#hooks/use-message-queue.js";
 
-import { Logo } from "./components/logo/index.tsx";
-import { Tips } from "./components/tips.tsx";
+import { Logo } from "./components/logo/index.js";
+import { Tips } from "./components/tips.js";
 
 type HomeProps = {
   isInitializing: boolean;

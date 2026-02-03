@@ -15,34 +15,30 @@ import {
   DialogHelp,
   DialogProvider,
   DialogSessionList,
-} from "#components/dialog/index.ts";
-import { ToastProvider } from "#components/toast.tsx";
-import { AgentProvider, useAgent } from "#context/agent.tsx";
-import {
-  type Command,
-  CommandProvider,
-  useCommand,
-} from "#context/command.tsx";
-import { ConfigProvider, useAgents } from "#context/config.tsx";
-import { ElicitationProvider, useElicitation } from "#context/elicitation.tsx";
-import { ExitProvider, useExit } from "#context/exit.tsx";
-import { KeybindProvider, useKeybind } from "#context/keybind.tsx";
-import { KVProvider, useKVSignal } from "#context/kv.tsx";
-import { PromptProvider } from "#context/prompt.tsx";
-import { RouteProvider, useRoute } from "#context/route.tsx";
-import { SessionProvider } from "#context/session.tsx";
+} from "#components/dialog/index.js";
+import { ToastProvider } from "#components/toast.js";
+import { AgentProvider, useAgent } from "#context/agent.js";
+import { type Command, CommandProvider, useCommand } from "#context/command.js";
+import { ConfigProvider, useAgents } from "#context/config.js";
+import { ElicitationProvider, useElicitation } from "#context/elicitation.js";
+import { ExitProvider, useExit } from "#context/exit.js";
+import { KeybindProvider, useKeybind } from "#context/keybind.js";
+import { KVProvider, useKVSignal } from "#context/kv.js";
+import { PromptProvider } from "#context/prompt.js";
+import { RouteProvider, useRoute } from "#context/route.js";
+import { SessionProvider } from "#context/session.js";
 import {
   type ThemeMode,
   ThemeProvider,
   useTheme,
-} from "#context/theme/index.tsx";
-import type { FileUIPart } from "#hooks/use-message-queue.ts";
-import { useMessageQueue } from "#hooks/use-message-queue.ts";
-import type { KVStore } from "#lib/kv.ts";
-import { isFinishPartWithUsage } from "#lib/type-guards.ts";
-import { Home } from "#routes/home/index.tsx";
-import { Session } from "#routes/session/index.tsx";
-import type { Agent, AgentMetadata, ConfigInput } from "#types.ts";
+} from "#context/theme/index.js";
+import type { FileUIPart } from "#hooks/use-message-queue.js";
+import { useMessageQueue } from "#hooks/use-message-queue.js";
+import type { KVStore } from "#lib/kv.js";
+import { isFinishPartWithUsage } from "#lib/type-guards.js";
+import { Home } from "#routes/home/index.js";
+import { Session } from "#routes/session/index.js";
+import type { Agent, AgentMetadata, ConfigInput } from "#types.js";
 
 const transportCache = new Map<string, Promise<ChatTransport<UIMessage>>>();
 

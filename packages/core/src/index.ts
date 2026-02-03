@@ -57,14 +57,14 @@
 export { RGBA } from "@opentui/core";
 
 // Main class
-export { type CliRendererConfig, TerminalUI } from "./agent-tui.tsx";
+export { type CliRendererConfig, TerminalUI } from "./agent-tui.js";
 export type {
   DeepPartial,
   Theme,
   ThemeColors,
   ThemeDefinition,
   ThemeMode,
-} from "./context/theme/index.tsx";
+} from "./context/theme/index.js";
 // Theme system
 export {
   extendTheme,
@@ -72,12 +72,12 @@ export {
   openCodeTheme,
   resolveTheme,
   vercelTheme,
-} from "./context/theme/index.tsx";
+} from "./context/theme/index.js";
 // Tool renderer base components
 export {
   BlockTool,
   InlineTool,
-} from "./routes/session/components/message-list/index.ts";
+} from "./routes/session/components/message-list/index.js";
 export type {
   // Agent types
   AgentCreateTransport,
@@ -104,6 +104,6 @@ export type {
   ToolRendererProps,
   ToolState,
   ToolStatus,
-} from "./types.ts";
+} from "./types.js";
 // Agent class and types
-export { Agent } from "./types.ts";
+export { Agent } from "./types.js";

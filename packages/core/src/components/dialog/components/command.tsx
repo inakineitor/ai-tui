@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 
-import type { KeybindAction } from "#context/keybind.tsx";
+import type { KeybindAction } from "#context/keybind.js";
 
-import { useDialog } from "../context.tsx";
-import { DialogSelect, type DialogSelectOption } from "./select.tsx";
+import { useDialog } from "../context.js";
+import { DialogSelect, type DialogSelectOption } from "./select.js";
 
 export type CommandOption = DialogSelectOption<string> & {
   keybind?: KeybindAction;

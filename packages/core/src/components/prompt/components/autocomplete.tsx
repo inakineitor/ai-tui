@@ -25,15 +25,15 @@ import type {
 } from "@opentui/core";
 import fuzzysort from "fuzzysort";
 
-import { useCommand } from "#context/command.tsx";
-import { useTheme } from "#context/theme/index.tsx";
+import { useCommand } from "#context/command.js";
+import { useTheme } from "#context/theme/index.js";
 
-import { SplitBorder } from "../../border.ts";
+import { SplitBorder } from "../../border.js";
 import type {
   AutocompleteOption,
   PromptInfo,
   PromptPart,
-} from "../lib/types.ts";
+} from "../lib/types.js";
 
 const MAX_VISIBLE_ITEMS = 10;
 

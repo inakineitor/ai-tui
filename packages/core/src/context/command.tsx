@@ -15,9 +15,9 @@ import {
   DialogCommand,
   type DialogContextValue,
   useDialog,
-} from "#components/dialog/index.ts";
+} from "#components/dialog/index.js";
 
-import { type KeybindAction, useKeybind } from "./keybind";
+import { type KeybindAction, useKeybind } from "./keybind.js";
 
 export type CommandCategory =
   | "Session"
