@@ -1,4 +1,4 @@
-import { Button } from "@ai-tui/docs-components";
+import { Button } from "../components/button.js";
 
 export default function Page() {
   return (
