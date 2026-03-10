@@ -23,6 +23,7 @@ const ExitContext = createContext<ExitContextValue | null>(null);
 
 export function ExitProvider({ children }: ExitProviderProps) {
   const cleanupFns = useRef<Set<CleanupFn>>(new Set());
+  const exitTaskRef = useRef<Promise<void> | undefined>(undefined);
   const renderer = useRenderer();
 
   const registerCleanup = useCallback((fn: CleanupFn) => {
@@ -33,12 +34,18 @@ export function ExitProvider({ children }: ExitProviderProps) {
   }, []);
 
   const exit = useCallback(
-    async (code = 0) => {
-      const fns = Array.from(cleanupFns.current);
-      await Promise.all(fns.map((fn) => fn()));
-      renderer.setTerminalTitle?.("");
-      renderer.destroy();
-      process.exit(code);
+    (code = 0): Promise<void> => {
+      if (exitTaskRef.current) {
+        return exitTaskRef.current;
+      }
+      exitTaskRef.current = (async () => {
+        const fns = Array.from(cleanupFns.current);
+        await Promise.all(fns.map((fn) => fn()));
+        renderer.setTerminalTitle?.("");
+        renderer.destroy();
+        process.exit(code);
+      })();
+      return exitTaskRef.current;
     },
     [renderer]
   );
