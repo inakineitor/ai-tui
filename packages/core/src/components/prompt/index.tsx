@@ -11,6 +11,7 @@
  */
 
 import { readFile, stat } from "node:fs/promises";
+import { platform } from "node:os";
 import { basename } from "node:path";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -565,6 +566,25 @@ export function Prompt({
     commandContext,
   ]);
 
+  const handleMouseDown = useCallback(
+    async (e: { button?: number; preventDefault?: () => void }) => {
+      if (e.button !== 1) {
+        return; // 1 = middle button
+      }
+      if (disabled) {
+        return;
+      }
+      e.preventDefault?.();
+      const text = await Clipboard.readPrimary();
+      const textarea = textareaRef.current;
+      if (!(text && textarea)) {
+        return;
+      }
+      textarea.insertText(text);
+    },
+    [disabled]
+  );
+
   const handleKeyDown = useCallback(
     // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex keyboard event handling
     async (e: KeyEvent) => {
@@ -967,6 +987,7 @@ export function Prompt({
               minHeight={1}
               onContentChange={handleContentChange}
               onKeyDown={handleKeyDown}
+              onMouseDown={handleMouseDown}
               onPaste={handlePaste}
               onSubmit={handleSubmit}
               placeholder={displayPlaceholder}
