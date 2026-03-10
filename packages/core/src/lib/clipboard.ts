@@ -208,6 +208,39 @@ const getCopyMethod = lazy(() => {
   };
 });
 
+async function readPrimary(): Promise<string | undefined> {
+  const os = platform();
+  if (os === "linux") {
+    if (
+      process.env.WAYLAND_DISPLAY &&
+      which.sync("wl-paste", { nothrow: true })
+    ) {
+      const result = await execa("wl-paste", ["--primary", "--no-newline"], {
+        reject: false,
+      });
+      if (result.stdout) {
+        return result.stdout;
+      }
+    }
+    if (which.sync("xclip", { nothrow: true })) {
+      const result = await execa("xclip", ["-selection", "primary", "-o"], {
+        reject: false,
+      });
+      if (result.stdout) {
+        return result.stdout;
+      }
+    }
+    if (which.sync("xsel", { nothrow: true })) {
+      const result = await execa("xsel", ["--primary", "--output"], {
+        reject: false,
+      });
+      if (result.stdout) {
+        return result.stdout;
+      }
+    }
+  }
+}
+
 async function copy(text: string): Promise<void> {
   writeOsc52(text);
   await getCopyMethod()(text);
@@ -216,4 +249,5 @@ async function copy(text: string): Promise<void> {
 export const Clipboard = {
   read,
   copy,
+  readPrimary,
 };
