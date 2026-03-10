@@ -99,27 +99,59 @@ async function read(): Promise<ClipboardContent | undefined> {
   }
 
   if (os === "linux") {
-    const waylandResult = await execa("wl-paste", ["-t", "image/png"], {
+    const imageMimeTypes = [
+      "image/png",
+      "image/jpeg",
+      "image/webp",
+      "image/gif",
+      "image/bmp",
+    ] as const;
+
+    // Try Wayland first
+    const waylandTypes = await execa("wl-paste", ["--list-types"], {
       reject: false,
-      encoding: "buffer",
     });
-    if (waylandResult.stdout && waylandResult.stdout.length > 0) {
-      return {
-        data: Buffer.from(waylandResult.stdout).toString("base64"),
-        mime: "image/png",
-      };
+    if (waylandTypes.stdout) {
+      const available = waylandTypes.stdout.split("\n");
+      for (const mime of imageMimeTypes) {
+        if (available.includes(mime)) {
+          const result = await execa("wl-paste", ["-t", mime], {
+            reject: false,
+            encoding: "buffer",
+          });
+          if (result.stdout && result.stdout.length > 0) {
+            return {
+              data: Buffer.from(result.stdout).toString("base64"),
+              mime,
+            };
+          }
+        }
+      }
     }
 
-    const x11Result = await execa(
+    // Try X11
+    const x11Targets = await execa(
       "xclip",
-      ["-selection", "clipboard", "-t", "image/png", "-o"],
-      { reject: false, encoding: "buffer" }
+      ["-selection", "clipboard", "-t", "TARGETS", "-o"],
+      { reject: false }
     );
-    if (x11Result.stdout && x11Result.stdout.length > 0) {
-      return {
-        data: Buffer.from(x11Result.stdout).toString("base64"),
-        mime: "image/png",
-      };
+    if (x11Targets.stdout) {
+      const available = x11Targets.stdout.split("\n");
+      for (const mime of imageMimeTypes) {
+        if (available.includes(mime)) {
+          const result = await execa(
+            "xclip",
+            ["-selection", "clipboard", "-t", mime, "-o"],
+            { reject: false, encoding: "buffer" }
+          );
+          if (result.stdout && result.stdout.length > 0) {
+            return {
+              data: Buffer.from(result.stdout).toString("base64"),
+              mime,
+            };
+          }
+        }
+      }
     }
   }
 
