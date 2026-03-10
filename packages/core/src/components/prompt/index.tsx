@@ -11,6 +11,7 @@
  */
 
 import { readFile, stat } from "node:fs/promises";
+import { platform } from "node:os";
 import { basename } from "node:path";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -603,6 +604,21 @@ export function Prompt({
             });
             return;
           }
+          // On Windows, bracketed paste may not fire reliably.
+          // Read text directly from clipboard as fallback.
+          if (platform() === "win32") {
+            const text = await Clipboard.readText();
+            if (text) {
+              e.preventDefault?.();
+              const lineCount = (text.match(/\n/g)?.length ?? 0) + 1;
+              if (lineCount >= 3 || text.length > 150) {
+                pasteTextWithBadge(text, `[Pasted ~${lineCount} lines]`);
+              } else {
+                textarea.insertText(text);
+              }
+              return;
+            }
+          }
         } catch {
           // If no image, let the default paste behavior continue
         }
@@ -691,6 +707,7 @@ export function Prompt({
       hasQueuedMessages,
       clearExtmarks,
       pasteImage,
+      pasteTextWithBadge,
       history,
       keybind,
     ]

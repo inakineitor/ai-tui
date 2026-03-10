@@ -131,6 +131,19 @@ async function read(): Promise<ClipboardContent | undefined> {
   }
 }
 
+async function readText(): Promise<string | undefined> {
+  try {
+    const text = await clipboardy.read();
+    if (!text) {
+      return undefined;
+    }
+    // Normalize line endings: CRLF -> LF, then CR -> LF
+    return text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  } catch {
+    return undefined;
+  }
+}
+
 /**
  * Helper to spawn a process with stdin pipe and write data to it.
  */
@@ -215,5 +228,6 @@ async function copy(text: string): Promise<void> {
 
 export const Clipboard = {
   read,
+  readText,
   copy,
 };
