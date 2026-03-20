@@ -10,14 +10,24 @@ import {
 
 import { useKeyboard } from "@opentui/react";
 
-import {
-  type CommandOption,
-  DialogCommand,
-  type DialogContextValue,
-  useDialog,
-} from "#components/dialog/index.js";
+import { type DialogContextValue, useDialog } from "#context/dialog.js";
 
 import { type KeybindAction, useKeybind } from "./keybind.js";
+
+export type CommandPaletteOption = {
+  value: string;
+  title: string;
+  description?: string;
+  category?: string;
+  footer?: string;
+  keybind?: KeybindAction;
+};
+
+export type CommandPaletteRenderer = (props: {
+  options: CommandPaletteOption[];
+  suggestedOptions: CommandPaletteOption[];
+  onSelect: (value: string) => void;
+}) => ReactNode;
 
 export type CommandCategory =
   | "Session"
@@ -64,11 +74,15 @@ export type CommandContextValue = {
 
 type CommandProviderProps = {
   children: ReactNode;
+  renderCommandPalette?: CommandPaletteRenderer;
 };
 
 const CommandContext = createContext<CommandContextValue | null>(null);
 
-export function CommandProvider({ children }: CommandProviderProps) {
+export function CommandProvider({
+  children,
+  renderCommandPalette,
+}: CommandProviderProps) {
   const commandsRef = useRef<Map<string, Command>>(new Map());
   const dynamicSourcesRef = useRef<Set<() => Command[]>>(new Set());
   const [suspendCount, setSuspendCount] = useState(0);
@@ -186,10 +200,13 @@ export function CommandProvider({ children }: CommandProviderProps) {
   }, [getAllCommands, execute]);
 
   const show = useCallback(() => {
+    if (!renderCommandPalette) {
+      return;
+    }
     const commands = getAllCommands().filter(
       (cmd) => !cmd.hidden && (!cmd.when || cmd.when())
     );
-    const options: CommandOption[] = commands.map((cmd) => ({
+    const options: CommandPaletteOption[] = commands.map((cmd) => ({
       value: cmd.id,
       title: cmd.title,
       description: cmd.description,
@@ -197,21 +214,21 @@ export function CommandProvider({ children }: CommandProviderProps) {
       footer: cmd.keybind ? keybind.print(cmd.keybind) : undefined,
       keybind: cmd.keybind,
     }));
-    const suggestedOptions: CommandOption[] = options
+    const suggestedOptions: CommandPaletteOption[] = options
       .filter((o) => o.keybind)
       .slice(0, 5)
       .map((o) => ({ ...o, category: "Suggested" }));
 
     dialog.replace(
-      <DialogCommand
-        onSelect={(commandId) => {
+      renderCommandPalette({
+        options,
+        suggestedOptions,
+        onSelect: (commandId) => {
           execute(commandId);
-        }}
-        options={options}
-        suggestedOptions={suggestedOptions}
-      />
+        },
+      })
     );
-  }, [getAllCommands, keybind.print, dialog, execute]);
+  }, [getAllCommands, keybind.print, dialog, execute, renderCommandPalette]);
 
   useKeyboard((evt) => {
     if (suspended()) {

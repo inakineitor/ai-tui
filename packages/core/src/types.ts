@@ -8,7 +8,7 @@ import type {
   UIMessage,
 } from "ai";
 
-import type { ToolComponentsMap } from "#routes/session/components/message-list/index.js";
+import type { ToolComponentsMap } from "#lib/tool-types.js";
 
 /** Handler for elicitation requests from AI agents */
 export type ElicitationHandler = (message: string) => Promise<string>;
@@ -260,12 +260,3 @@ export type Config<
   commands: CommandDefinition[];
   tips: string[];
 };
-
-// Re-export tool renderer types for custom tool components
-export type {
-  ToolComponentsMap,
-  ToolPartInfo,
-  ToolRendererProps,
-  ToolState,
-  ToolStatus,
-} from "#routes/session/components/message-list/index.js";

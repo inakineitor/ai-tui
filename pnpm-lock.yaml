@@ -55,6 +55,70 @@ importers:
         specifier: 5.5.4
         version: 5.5.4
 
+  packages/components:
+    dependencies:
+      '@ai-tui/core':
+        specifier: workspace:*
+        version: link:../core
+      clipboardy:
+        specifier: ^5.0.2
+        version: 5.2.0
+      fast-glob:
+        specifier: ^3.3.3
+        version: 3.3.3
+      figlet:
+        specifier: ^1.8.0
+        version: 1.10.0
+      fuzzysort:
+        specifier: ^3.1.0
+        version: 3.1.0
+      mime-types:
+        specifier: ^3.0.2
+        version: 3.0.2
+      opentui-spinner:
+        specifier: ^0.0.6
+        version: 0.0.6(@opentui/core@0.1.77(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10))(@opentui/react@0.1.77(react-devtools-core@7.0.1)(react@19.2.4)(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10)(ws@8.19.0))(typescript@5.5.4)
+      zod:
+        specifier: ^4.1.13
+        version: 4.3.6
+    devDependencies:
+      '@ai-sdk/react':
+        specifier: ^3.0.41
+        version: 3.0.70(react@19.2.4)(zod@4.3.6)
+      '@ai-tui/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@opentui/core':
+        specifier: ^0.1.72
+        version: 0.1.77(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10)
+      '@opentui/react':
+        specifier: ^0.1.72
+        version: 0.1.77(react-devtools-core@7.0.1)(react@19.2.4)(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10)(ws@8.19.0)
+      '@types/figlet':
+        specifier: ^1.7.0
+        version: 1.7.0
+      '@types/mime-types':
+        specifier: ^3.0.1
+        version: 3.0.1
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.2.0
+      '@types/react':
+        specifier: ^19
+        version: 19.2.10
+      ai:
+        specifier: ^6.0.42
+        version: 6.0.68(zod@4.3.6)
+      react:
+        specifier: ^19.2.3
+        version: 19.2.4
+      tsdown:
+        specifier: ^0.20.1
+        version: 0.20.1(publint@0.3.17)(typescript@5.5.4)
+      typescript:
+        specifier: ^5
+        version: 5.5.4
+
   packages/core:
     dependencies:
       clipboardy:

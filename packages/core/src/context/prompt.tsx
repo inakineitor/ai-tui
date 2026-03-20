@@ -21,14 +21,14 @@ import {
   useState,
 } from "react";
 
+import { useKV } from "#context/kv.js";
 import {
   type FrecencyTracker,
   createFrecencyTracker,
-} from "#components/prompt/lib/frecency.js";
-import { type History, createHistory } from "#components/prompt/lib/history.js";
-import { type Stash, createStash } from "#components/prompt/lib/stash.js";
-import type { HistoryEntry, StashEntry } from "#components/prompt/lib/types.js";
-import { useKV } from "#context/kv.js";
+} from "#lib/prompt/frecency.js";
+import { type History, createHistory } from "#lib/prompt/history.js";
+import { type Stash, createStash } from "#lib/prompt/stash.js";
+import type { HistoryEntry, StashEntry } from "#lib/prompt/types.js";
 
 // =============================================================================
 // History Context

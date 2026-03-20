@@ -1,0 +1,90 @@
+{
+  "name": "@ai-tui/components",
+  "version": "0.1.0",
+  "description": "UI components for AI TUI applications built with the Vercel AI SDK",
+  "type": "module",
+  "imports": {
+    "#*": "./src/*"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "lint:package": "publint",
+    "prepublishOnly": "pnpm run build",
+    "check-types": "tsc --noEmit",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@ai-tui/core": "workspace:*",
+    "clipboardy": "^5.0.2",
+    "fast-glob": "^3.3.3",
+    "figlet": "^1.8.0",
+    "fuzzysort": "^3.1.0",
+    "mime-types": "^3.0.2",
+    "opentui-spinner": "^0.0.6",
+    "zod": "^4.1.13"
+  },
+  "peerDependencies": {
+    "@ai-sdk/react": ">=3.0.0",
+    "@opentui/core": ">=0.1.72",
+    "@opentui/react": ">=0.1.72",
+    "ai": ">=6.0.0",
+    "react": ">=19.0.0"
+  },
+  "devDependencies": {
+    "@ai-sdk/react": "^3.0.41",
+    "@ai-tui/tsconfig": "workspace:*",
+    "@opentui/core": "^0.1.72",
+    "@opentui/react": "^0.1.72",
+    "@types/figlet": "^1.7.0",
+    "@types/mime-types": "^3.0.1",
+    "@types/node": "^25.1.0",
+    "@types/react": "^19",
+    "ai": "^6.0.42",
+    "react": "^19.2.3",
+    "tsdown": "^0.20.1",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inakineitor/ai-tui.git",
+    "directory": "packages/components"
+  },
+  "keywords": [
+    "ai",
+    "tui",
+    "terminal",
+    "ai-sdk",
+    "cli",
+    "agent",
+    "components"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
