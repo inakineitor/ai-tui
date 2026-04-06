@@ -1,6 +1,6 @@
 {
   "name": "@ai-tui/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Build AI agent terminal UIs with the Vercel AI SDK",
   "type": "module",
   "imports": {
@@ -70,7 +70,7 @@
     "happy-dom": "^20.3.7",
     "react": "^19.2.3",
     "tsdown": "^0.20.1",
-    "typescript": "^5"
+    "typescript": "^6"
   },
   "engines": {
     "node": ">=20"
