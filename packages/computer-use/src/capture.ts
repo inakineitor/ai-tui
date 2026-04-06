@@ -132,14 +132,22 @@ const MAX_SCALING_TARGETS: Resolution[] = [
  */
 function findScalingTarget(width: number, height: number): Resolution | null {
   const ratio = width / height;
+  let bestTarget: Resolution | null = null;
+  let bestDiff = Number.POSITIVE_INFINITY;
   for (const target of MAX_SCALING_TARGETS) {
-    // Allow some error in aspect ratio (~2%)
-    if (Math.abs(target.width / target.height - ratio) < 0.02) {
-      if (target.width < width) {
-        return target;
-      }
-      return null;
+    if (target.width >= width) {
+      continue;
     }
+    const diff = Math.abs(target.width / target.height - ratio);
+    if (diff < bestDiff) {
+      bestDiff = diff;
+      bestTarget = target;
+    }
+  }
+  // Accept aspect ratios within ~8% to cover macOS Retina displays
+  // (e.g. 1728x1117 ratio 1.547 → WXGA 1280x800 ratio 1.6, gap 0.053)
+  if (bestTarget !== null && bestDiff < 0.08) {
+    return bestTarget;
   }
   return null;
 }

@@ -11,6 +11,7 @@
         "noUnusedImports": "off"
       },
       "style": {
+        "noNonNullAssertion": "off",
         "useConsistentTypeDefinitions": {
           "level": "error",
           "options": {

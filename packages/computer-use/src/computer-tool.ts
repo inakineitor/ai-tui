@@ -97,6 +97,16 @@ export type ComputerToolOptions = {
    * @default 8
    */
   typeCharDelayMs?: number;
+
+  /**
+   * Automatically capture and return a screenshot after most actions.
+   * Matches the Anthropic Python reference behavior where the model
+   * receives visual feedback after every action (click, type, scroll, etc.).
+   * Excluded actions: screenshot, zoom, wait (already return images),
+   * and cursor_position (text-only in the reference).
+   * @default true
+   */
+  autoScreenshot?: boolean;
 };
 
 /* ===== Tool Input / Output Types ===== */
@@ -113,7 +123,10 @@ type ToolInput = {
   key?: string;
 };
 
-type ToolOutput = string | { type: "image"; data: string };
+type ToolOutput =
+  | string
+  | { type: "image"; data: string }
+  | { type: "result"; text: string; screenshot: string };
 
 /* ===== Helpers ===== */
 
@@ -139,6 +152,7 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
     mouseAutoDelayMs = 50,
     keyboardAutoDelayMs = 10,
     typeCharDelayMs = 8,
+    autoScreenshot = true,
   } = options;
 
   /* ===== Configure nut-js ===== */
@@ -292,6 +306,12 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
         if (input.region === undefined) {
           throw new Error("zoom requires a region parameter");
         }
+        if (input.region.length !== 4) {
+          throw new Error("region must have 4 coordinates (x0, y0, x1, y1)");
+        }
+        if (!input.region.every((c) => Number.isInteger(c) && c >= 0)) {
+          throw new Error("region must contain non-negative integers");
+        }
         if (target.mode === "window") {
           refreshSource();
         }
@@ -406,7 +426,10 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
 
       /* ===== Scroll ===== */
       case "scroll": {
-        const amount = input.scroll_amount ?? 3;
+        if (input.scroll_amount === undefined || input.scroll_amount < 0) {
+          throw new Error("scroll_amount must be a non-negative integer");
+        }
+        const amount = input.scroll_amount;
 
         if (input.coordinate !== undefined) {
           await moveToCoord(input.coordinate);
@@ -456,7 +479,7 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
       }
 
       case "key": {
-        const keyStr = input.key ?? input.text;
+        const keyStr = input.text;
         if (keyStr === undefined) {
           throw new Error("key requires a key string");
         }
@@ -467,11 +490,23 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
       }
 
       case "hold_key": {
-        const keyStr = input.key ?? input.text;
+        const keyStr = input.text;
         if (keyStr === undefined) {
           throw new Error("hold_key requires a key string");
         }
-        const duration = input.duration ?? 1;
+        if (
+          input.duration === undefined ||
+          typeof input.duration !== "number"
+        ) {
+          throw new Error("duration must be a number");
+        }
+        if (input.duration < 0) {
+          throw new Error("duration must be non-negative");
+        }
+        if (input.duration > 100) {
+          throw new Error("duration is too long");
+        }
+        const duration = input.duration;
         const keys = parseKeys(keyStr);
         await keyboard.pressKey(...keys);
         await sleep(duration * 1000);
@@ -481,7 +516,19 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
 
       /* ===== Wait ===== */
       case "wait": {
-        const duration = input.duration ?? 1;
+        if (
+          input.duration === undefined ||
+          typeof input.duration !== "number"
+        ) {
+          throw new Error("duration must be a number");
+        }
+        if (input.duration < 0) {
+          throw new Error("duration must be non-negative");
+        }
+        if (input.duration > 100) {
+          throw new Error("duration is too long");
+        }
+        const duration = input.duration;
         await sleep(duration * 1000);
         // Return a screenshot after waiting (matches Anthropic reference)
         if (target.mode === "window") {
@@ -496,11 +543,41 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
     }
   }
 
+  /* ===== Auto-screenshot wrapper ===== */
+
+  async function executeWithScreenshot(input: ToolInput): Promise<ToolOutput> {
+    const result = await execute(input);
+    if (!autoScreenshot || typeof result !== "string") {
+      return result;
+    }
+    if (input.action === "cursor_position") {
+      return result;
+    }
+    if (target.mode === "window") {
+      refreshSource();
+    }
+    const screenshot = await captureScreenshot();
+    return { type: "result", text: result, screenshot };
+  }
+
   /* ===== Build model output converter ===== */
 
   function toModelOutput({ output }: { output: ToolOutput }) {
     if (typeof output === "string") {
       return { type: "text" as const, value: output };
+    }
+    if (output.type === "result") {
+      return {
+        type: "content" as const,
+        value: [
+          { type: "text" as const, text: output.text },
+          {
+            type: "image-data" as const,
+            data: output.screenshot,
+            mediaType: "image/png" as const,
+          },
+        ],
+      };
     }
     return {
       type: "content" as const,
@@ -526,7 +603,7 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
     ? {
         tool: anthropic.tools.computer_20250124({
           ...commonOpts,
-          execute,
+          execute: executeWithScreenshot,
           toModelOutput,
         }),
         displaySize: { width: displayWidth, height: displayHeight },
@@ -537,7 +614,7 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
         tool: anthropic.tools.computer_20251124({
           ...commonOpts,
           enableZoom,
-          execute,
+          execute: executeWithScreenshot,
           toModelOutput,
         }),
         displaySize: { width: displayWidth, height: displayHeight },
