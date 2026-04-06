@@ -12,8 +12,8 @@ importers:
         specifier: 2.3.12
         version: 2.3.12
       '@changesets/cli':
-        specifier: 0.0.0-pr1845.8583df5
-        version: 0.0.0-pr1845.8583df5(@types/node@25.2.0)
+        specifier: ^2.30.0
+        version: 2.30.0(@types/node@25.2.0)
       lefthook:
         specifier: ^2.0.16
         version: 2.0.16
@@ -80,7 +80,7 @@ importers:
         version: 3.0.2
       opentui-spinner:
         specifier: ^0.0.6
-        version: 0.0.6(@opentui/core@0.1.77(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10))(@opentui/react@0.1.77(react-devtools-core@7.0.1)(react@19.2.4)(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10)(ws@8.19.0))(typescript@5.5.4)
+        version: 0.0.6(@opentui/core@0.1.77(stage-js@1.0.0-alpha.17)(typescript@6.0.2)(web-tree-sitter@0.25.10))(@opentui/react@0.1.77(react-devtools-core@7.0.1)(react@19.2.4)(stage-js@1.0.0-alpha.17)(typescript@6.0.2)(web-tree-sitter@0.25.10)(ws@8.19.0))(typescript@6.0.2)
       which:
         specifier: ^6.0.0
         version: 6.0.0
@@ -99,10 +99,10 @@ importers:
         version: 20.4.0
       '@opentui/core':
         specifier: ^0.1.72
-        version: 0.1.77(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10)
+        version: 0.1.77(stage-js@1.0.0-alpha.17)(typescript@6.0.2)(web-tree-sitter@0.25.10)
       '@opentui/react':
         specifier: ^0.1.72
-        version: 0.1.77(react-devtools-core@7.0.1)(react@19.2.4)(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10)(ws@8.19.0)
+        version: 0.1.77(react-devtools-core@7.0.1)(react@19.2.4)(stage-js@1.0.0-alpha.17)(typescript@6.0.2)(web-tree-sitter@0.25.10)(ws@8.19.0)
       '@testing-library/react':
         specifier: ^16.3.2
         version: 16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -132,10 +132,10 @@ importers:
         version: 19.2.4
       tsdown:
         specifier: ^0.20.1
-        version: 0.20.1(publint@0.3.17)(typescript@5.5.4)
+        version: 0.20.1(publint@0.3.17)(typescript@6.0.2)
       typescript:
-        specifier: ^5
-        version: 5.5.4
+        specifier: ^6
+        version: 6.0.2
 
   packages/tsconfig: {}
 
@@ -253,8 +253,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@changesets/apply-release-plan@0.0.0-pr1845.8583df5':
-    resolution: {integrity: sha512-TsIy7iwP1L+zU0gbTgCVtDsdUEeBWz4RUO68gjHlMpUzh36us4f7IH2gVw6f0CEGIpkUOC6OSgJi8Ci6UF6/pA==}
+  '@changesets/apply-release-plan@7.1.0':
+    resolution: {integrity: sha512-yq8ML3YS7koKQ/9bk1PqO0HMzApIFNwjlwCnwFEXMzNe8NpzeeYYKCmnhWJGkN8g7E51MnWaSbqRcTcdIxUgnQ==}
 
   '@changesets/assemble-release-plan@6.0.9':
     resolution: {integrity: sha512-tPgeeqCHIwNo8sypKlS3gOPmsS3wP0zHt67JDuL20P4QcXiw/O4Hl7oXiuLnP9yg+rXLQ2sScdV1Kkzde61iSQ==}
@@ -262,12 +262,12 @@ packages:
   '@changesets/changelog-git@0.2.1':
     resolution: {integrity: sha512-x/xEleCFLH28c3bQeQIyeZf8lFXyDFVn1SgcBiR2Tw/r4IAWlk1fzxCEZ6NxQAjF2Nwtczoen3OA2qR+UawQ8Q==}
 
-  '@changesets/cli@0.0.0-pr1845.8583df5':
-    resolution: {integrity: sha512-1xkWev2DO/e9LQBxKBQXP5DYM0xnoxnLT4nOze0p58Q9sr+6ejcx9ghCMVEuZ/USqgCQX6UBIC0ftFwIn2U9Lw==}
+  '@changesets/cli@2.30.0':
+    resolution: {integrity: sha512-5D3Nk2JPqMI1wK25pEymeWRSlSMdo5QOGlyfrKg0AOufrUcjEE3RQgaCpHoBiM31CSNrtSgdJ0U6zL1rLDDfBA==}
     hasBin: true
 
-  '@changesets/config@0.0.0-pr1845.8583df5':
-    resolution: {integrity: sha512-vR4AqtKD+/EhxJesDkbzTKVRNhYCxIxf4R+t9B9JYE8MCNewDeKWGafgAOJkkw770fIZuN6qAwB2SliOGBGBVg==}
+  '@changesets/config@3.1.3':
+    resolution: {integrity: sha512-vnXjcey8YgBn2L1OPWd3ORs0bGC4LoYcK/ubpgvzNVr53JXV5GiTVj7fWdMRsoKUH7hhhMAQnsJUqLr21EncNw==}
 
   '@changesets/errors@0.2.0':
     resolution: {integrity: sha512-6BLOQUscTpZeGljvyQXlWOItQyU71kCdGz7Pi8H8zdw6BI0g3m43iL4xKUVPWtG+qrrL9DTjpdn8eYuCQSRpow==}
@@ -275,8 +275,8 @@ packages:
   '@changesets/get-dependents-graph@2.1.3':
     resolution: {integrity: sha512-gphr+v0mv2I3Oxt19VdWRRUxq3sseyUpX9DaHpTUmLj92Y10AGy+XOtV+kbM6L/fDcpx7/ISDFK6T8A/P3lOdQ==}
 
-  '@changesets/get-release-plan@0.0.0-pr1845.8583df5':
-    resolution: {integrity: sha512-6EWxk/9vYrhWxHn3EMTEpsBZv+1V7z5loSasR3I9iSrExi7hDVhTrKQXOG7cnoQATL0YuitBDNN2W9hPjXazHg==}
+  '@changesets/get-release-plan@4.0.15':
+    resolution: {integrity: sha512-Q04ZaRPuEVZtA+auOYgFaVQQSA98dXiVe/yFaZfY7hoSmQICHGvP0TF4u3EDNHWmmCS4ekA/XSpKlSM2PyTS2g==}
 
   '@changesets/get-version-range-type@0.4.0':
     resolution: {integrity: sha512-hwawtob9DryoGTpixy1D3ZXbGgJu1Rhr+ySH2PvTLHvkZuQ7sRT4oQwMh0hbqZH1weAooedEjRsbrWcGLCeyVQ==}
@@ -287,14 +287,14 @@ packages:
   '@changesets/logger@0.1.1':
     resolution: {integrity: sha512-OQtR36ZlnuTxKqoW4Sv6x5YIhOmClRd5pWsjZsddYxpWs517R0HkyiefQPIytCVh4ZcC5x9XaG8KTdd5iRQUfg==}
 
-  '@changesets/parse@0.4.2':
-    resolution: {integrity: sha512-Uo5MC5mfg4OM0jU3up66fmSn6/NE9INK+8/Vn/7sMVcdWg46zfbvvUSjD9EMonVqPi9fbrJH9SXHn48Tr1f2yA==}
+  '@changesets/parse@0.4.3':
+    resolution: {integrity: sha512-ZDmNc53+dXdWEv7fqIUSgRQOLYoUom5Z40gmLgmATmYR9NbL6FJJHwakcCpzaeCy+1D0m0n7mT4jj2B/MQPl7A==}
 
   '@changesets/pre@2.0.2':
     resolution: {integrity: sha512-HaL/gEyFVvkf9KFg6484wR9s0qjAXlZ8qWPDkTyKF6+zqjBe/I2mygg3MbpZ++hdi0ToqNUF8cjj7fBy0dg8Ug==}
 
-  '@changesets/read@0.6.6':
-    resolution: {integrity: sha512-P5QaN9hJSQQKJShzzpBT13FzOSPyHbqdoIBUd2DJdgvnECCyO6LmAOWSV+O8se2TaZJVwSXjL+v9yhb+a9JeJg==}
+  '@changesets/read@0.6.7':
+    resolution: {integrity: sha512-D1G4AUYGrBEk8vj8MGwf75k9GpN6XL3wg8i42P2jZZwFLXnlr2Pn7r9yuQNbaMCarP7ZQWNJbV6XLeysAIMhTA==}
 
   '@changesets/should-skip-package@0.1.2':
     resolution: {integrity: sha512-qAK/WrqWLNCP22UDdBTMPH5f41elVDlsNyat180A33dWxuUDyNpg6fPi/FyTZwRriVjg0L8gnjJn2F9XAoF0qw==}
@@ -2002,6 +2002,11 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  typescript@6.0.2:
+    resolution: {integrity: sha512-bGdAIrZ0wiGDo5l8c++HWtbaNCWTS4UTv7RaTH/ThVIgjkveJt83m74bBHMJkuCbslY8ixgLBVZJIOiQlQTjfQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   ultracite@7.1.1:
     resolution: {integrity: sha512-9qScPB2/8XobaC5Xf99Z9ZP1oFWNihzT1tteKkPGkKyWevSXaWVRS9oFGUxXW/pxrmHEwIU9b03NJgrHZn6P+Q==}
     hasBin: true
@@ -2217,9 +2222,9 @@ snapshots:
   '@biomejs/cli-win32-x64@2.3.12':
     optional: true
 
-  '@changesets/apply-release-plan@0.0.0-pr1845.8583df5':
+  '@changesets/apply-release-plan@7.1.0':
     dependencies:
-      '@changesets/config': 0.0.0-pr1845.8583df5
+      '@changesets/config': 3.1.3
       '@changesets/get-version-range-type': 0.4.0
       '@changesets/git': 3.0.4
       '@changesets/should-skip-package': 0.1.2
@@ -2246,19 +2251,19 @@ snapshots:
     dependencies:
       '@changesets/types': 6.1.0
 
-  '@changesets/cli@0.0.0-pr1845.8583df5(@types/node@25.2.0)':
+  '@changesets/cli@2.30.0(@types/node@25.2.0)':
     dependencies:
-      '@changesets/apply-release-plan': 0.0.0-pr1845.8583df5
+      '@changesets/apply-release-plan': 7.1.0
       '@changesets/assemble-release-plan': 6.0.9
       '@changesets/changelog-git': 0.2.1
-      '@changesets/config': 0.0.0-pr1845.8583df5
+      '@changesets/config': 3.1.3
       '@changesets/errors': 0.2.0
       '@changesets/get-dependents-graph': 2.1.3
-      '@changesets/get-release-plan': 0.0.0-pr1845.8583df5
+      '@changesets/get-release-plan': 4.0.15
       '@changesets/git': 3.0.4
       '@changesets/logger': 0.1.1
       '@changesets/pre': 2.0.2
-      '@changesets/read': 0.6.6
+      '@changesets/read': 0.6.7
       '@changesets/should-skip-package': 0.1.2
       '@changesets/types': 6.1.0
       '@changesets/write': 0.4.0
@@ -2277,11 +2282,12 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@changesets/config@0.0.0-pr1845.8583df5':
+  '@changesets/config@3.1.3':
     dependencies:
       '@changesets/errors': 0.2.0
       '@changesets/get-dependents-graph': 2.1.3
       '@changesets/logger': 0.1.1
+      '@changesets/should-skip-package': 0.1.2
       '@changesets/types': 6.1.0
       '@manypkg/get-packages': 1.1.3
       fs-extra: 7.0.1
@@ -2298,12 +2304,12 @@ snapshots:
       picocolors: 1.1.1
       semver: 7.7.3
 
-  '@changesets/get-release-plan@0.0.0-pr1845.8583df5':
+  '@changesets/get-release-plan@4.0.15':
     dependencies:
       '@changesets/assemble-release-plan': 6.0.9
-      '@changesets/config': 0.0.0-pr1845.8583df5
+      '@changesets/config': 3.1.3
       '@changesets/pre': 2.0.2
-      '@changesets/read': 0.6.6
+      '@changesets/read': 0.6.7
       '@changesets/types': 6.1.0
       '@manypkg/get-packages': 1.1.3
 
@@ -2321,7 +2327,7 @@ snapshots:
     dependencies:
       picocolors: 1.1.1
 
-  '@changesets/parse@0.4.2':
+  '@changesets/parse@0.4.3':
     dependencies:
       '@changesets/types': 6.1.0
       js-yaml: 4.1.1
@@ -2333,11 +2339,11 @@ snapshots:
       '@manypkg/get-packages': 1.1.3
       fs-extra: 7.0.1
 
-  '@changesets/read@0.6.6':
+  '@changesets/read@0.6.7':
     dependencies:
       '@changesets/git': 3.0.4
       '@changesets/logger': 0.1.1
-      '@changesets/parse': 0.4.2
+      '@changesets/parse': 0.4.3
       '@changesets/types': 6.1.0
       fs-extra: 7.0.1
       p-filter: 2.1.0
@@ -2791,9 +2797,9 @@ snapshots:
   '@opentui/core-win32-x64@0.1.77':
     optional: true
 
-  '@opentui/core@0.1.77(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10)':
+  '@opentui/core@0.1.77(stage-js@1.0.0-alpha.17)(typescript@6.0.2)(web-tree-sitter@0.25.10)':
     dependencies:
-      bun-ffi-structs: 0.1.2(typescript@5.5.4)
+      bun-ffi-structs: 0.1.2(typescript@6.0.2)
       diff: 8.0.2
       jimp: 1.6.0
       marked: 17.0.1
@@ -2814,9 +2820,9 @@ snapshots:
       - stage-js
       - typescript
 
-  '@opentui/react@0.1.77(react-devtools-core@7.0.1)(react@19.2.4)(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10)(ws@8.19.0)':
+  '@opentui/react@0.1.77(react-devtools-core@7.0.1)(react@19.2.4)(stage-js@1.0.0-alpha.17)(typescript@6.0.2)(web-tree-sitter@0.25.10)(ws@8.19.0)':
     dependencies:
-      '@opentui/core': 0.1.77(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10)
+      '@opentui/core': 0.1.77(stage-js@1.0.0-alpha.17)(typescript@6.0.2)(web-tree-sitter@0.25.10)
       react: 19.2.4
       react-devtools-core: 7.0.1
       react-reconciler: 0.32.0(react@19.2.4)
@@ -3019,9 +3025,9 @@ snapshots:
       base64-js: 1.5.1
       ieee754: 1.2.1
 
-  bun-ffi-structs@0.1.2(typescript@5.5.4):
+  bun-ffi-structs@0.1.2(typescript@6.0.2):
     dependencies:
-      typescript: 5.5.4
+      typescript: 6.0.2
 
   bun-webgpu-darwin-arm64@0.1.4:
     optional: true
@@ -3513,13 +3519,13 @@ snapshots:
     dependencies:
       mimic-fn: 2.1.0
 
-  opentui-spinner@0.0.6(@opentui/core@0.1.77(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10))(@opentui/react@0.1.77(react-devtools-core@7.0.1)(react@19.2.4)(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10)(ws@8.19.0))(typescript@5.5.4):
+  opentui-spinner@0.0.6(@opentui/core@0.1.77(stage-js@1.0.0-alpha.17)(typescript@6.0.2)(web-tree-sitter@0.25.10))(@opentui/react@0.1.77(react-devtools-core@7.0.1)(react@19.2.4)(stage-js@1.0.0-alpha.17)(typescript@6.0.2)(web-tree-sitter@0.25.10)(ws@8.19.0))(typescript@6.0.2):
     dependencies:
-      '@opentui/core': 0.1.77(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10)
+      '@opentui/core': 0.1.77(stage-js@1.0.0-alpha.17)(typescript@6.0.2)(web-tree-sitter@0.25.10)
       cli-spinners: 3.4.0
-      typescript: 5.5.4
+      typescript: 6.0.2
     optionalDependencies:
-      '@opentui/react': 0.1.77(react-devtools-core@7.0.1)(react@19.2.4)(stage-js@1.0.0-alpha.17)(typescript@5.5.4)(web-tree-sitter@0.25.10)(ws@8.19.0)
+      '@opentui/react': 0.1.77(react-devtools-core@7.0.1)(react@19.2.4)(stage-js@1.0.0-alpha.17)(typescript@6.0.2)(web-tree-sitter@0.25.10)(ws@8.19.0)
 
   outdent@0.5.0: {}
 
@@ -3678,7 +3684,7 @@ snapshots:
 
   reusify@1.1.0: {}
 
-  rolldown-plugin-dts@0.21.8(rolldown@1.0.0-rc.1)(typescript@5.5.4):
+  rolldown-plugin-dts@0.21.8(rolldown@1.0.0-rc.1)(typescript@6.0.2):
     dependencies:
       '@babel/generator': 8.0.0-beta.4
       '@babel/parser': 8.0.0-beta.4
@@ -3690,7 +3696,7 @@ snapshots:
       obug: 2.1.1
       rolldown: 1.0.0-rc.1
     optionalDependencies:
-      typescript: 5.5.4
+      typescript: 6.0.2
     transitivePeerDependencies:
       - oxc-resolver
 
@@ -3866,7 +3872,7 @@ snapshots:
 
   tree-kill@1.2.2: {}
 
-  tsdown@0.20.1(publint@0.3.17)(typescript@5.5.4):
+  tsdown@0.20.1(publint@0.3.17)(typescript@6.0.2):
     dependencies:
       ansis: 4.2.0
       cac: 6.7.14
@@ -3877,7 +3883,7 @@ snapshots:
       obug: 2.1.1
       picomatch: 4.0.3
       rolldown: 1.0.0-rc.1
-      rolldown-plugin-dts: 0.21.8(rolldown@1.0.0-rc.1)(typescript@5.5.4)
+      rolldown-plugin-dts: 0.21.8(rolldown@1.0.0-rc.1)(typescript@6.0.2)
       semver: 7.7.3
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
@@ -3886,7 +3892,7 @@ snapshots:
       unrun: 0.2.26
     optionalDependencies:
       publint: 0.3.17
-      typescript: 5.5.4
+      typescript: 6.0.2
     transitivePeerDependencies:
       - '@ts-macro/tsc'
       - '@typescript/native-preview'
@@ -3928,6 +3934,8 @@ snapshots:
   type-fest@2.19.0: {}
 
   typescript@5.5.4: {}
+
+  typescript@6.0.2: {}
 
   ultracite@7.1.1:
     dependencies:
