@@ -7,15 +7,22 @@ import {
   sleep,
   straightTo,
 } from "@nut-tree-fork/nut-js";
+import sharp from "sharp";
 
 import {
   type CaptureSource,
   type CaptureTarget,
+  type ScalingInfo,
+  computeScaling,
   resolveCaptureSource,
 } from "./capture.js";
 import { parseKeys } from "./key-map.js";
 
-// ─── Options ─────────────────────────────────────────────
+/* ===== Constants ===== */
+
+const TYPING_GROUP_SIZE = 50;
+
+/* ===== Options ===== */
 
 export type ComputerToolOptions = {
   /**
@@ -55,6 +62,14 @@ export type ComputerToolOptions = {
   displayNumber?: number;
 
   /**
+   * Scale screenshots down to standard resolutions (XGA/WXGA/FWXGA)
+   * and scale coordinates back up. Recommended by Anthropic for better
+   * model accuracy and reduced token usage.
+   * @default true
+   */
+  scalingEnabled?: boolean;
+
+  /**
    * Mouse movement speed in pixels/sec (for animated mode).
    * Ignored when animated is false since setPosition is instant.
    * @default 1500
@@ -84,7 +99,7 @@ export type ComputerToolOptions = {
   typeCharDelayMs?: number;
 };
 
-// ─── Tool Input / Output Types ───────────────────────────
+/* ===== Tool Input / Output Types ===== */
 
 type ToolInput = {
   action: string;
@@ -100,7 +115,17 @@ type ToolInput = {
 
 type ToolOutput = string | { type: "image"; data: string };
 
-// ─── Factory ─────────────────────────────────────────────
+/* ===== Helpers ===== */
+
+function chunks(s: string, size: number): string[] {
+  const result: string[] = [];
+  for (let i = 0; i < s.length; i += size) {
+    result.push(s.slice(i, i + size));
+  }
+  return result;
+}
+
+/* ===== Factory ===== */
 
 export function createComputerTool(options: ComputerToolOptions = {}) {
   const {
@@ -109,13 +134,14 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
     toolVersion = "20251124",
     enableZoom = true,
     displayNumber,
+    scalingEnabled = true,
     mouseSpeed = 1500,
     mouseAutoDelayMs = 50,
     keyboardAutoDelayMs = 10,
     typeCharDelayMs = 8,
   } = options;
 
-  // ── Configure nut-js ────────────────────────────────────
+  /* ===== Configure nut-js ===== */
 
   if (animated) {
     mouse.config.mouseSpeed = mouseSpeed;
@@ -127,27 +153,52 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
     keyboard.config.autoDelayMs = 0;
   }
 
-  // ── Resolve capture source ──────────────────────────────
+  /* ===== Resolve capture source + scaling ===== */
 
   let source: CaptureSource = resolveCaptureSource(target);
-  const displayWidth = source.width;
-  const displayHeight = source.height;
+  let scaling: ScalingInfo = scalingEnabled
+    ? computeScaling(source.width, source.height)
+    : computeScaling(0, 0); // no-op scaling when disabled
+
+  // Dimensions reported to the model (scaled if enabled)
+  const displayWidth = scalingEnabled ? scaling.scaledWidth : source.width;
+  const displayHeight = scalingEnabled ? scaling.scaledHeight : source.height;
 
   function refreshSource(): void {
     source = resolveCaptureSource(target);
+    if (scalingEnabled) {
+      scaling = computeScaling(source.width, source.height);
+    }
   }
 
-  // ── Coordinate helpers ──────────────────────────────────
+  /* ===== Coordinate helpers ===== */
+
+  function validateCoordinate(coord: number[]): void {
+    if (coord.length !== 2) {
+      throw new Error(`Coordinate must have 2 elements, got ${coord.length}`);
+    }
+    const [x, y] = coord;
+    if (x < 0 || y < 0) {
+      throw new Error(`Coordinates must be non-negative, got (${x}, ${y})`);
+    }
+    if (x > displayWidth || y > displayHeight) {
+      throw new Error(
+        `Coordinates (${x}, ${y}) are out of bounds (${displayWidth}x${displayHeight})`
+      );
+    }
+  }
 
   function toAbsolute(x: number, y: number): Point {
-    return new Point(x + source.offsetX, y + source.offsetY);
+    // Scale from API coordinates to native, then add monitor/window offset
+    const native = scaling.toNative(x, y);
+    return new Point(native.x + source.offsetX, native.y + source.offsetY);
   }
 
   function absPoint(coord: number[]): Point {
     return toAbsolute(coord[0], coord[1]);
   }
 
-  // ── Mouse movement (animated vs instant) ────────────────
+  /* ===== Mouse movement (animated vs instant) ===== */
 
   async function moveTo(point: Point): Promise<void> {
     if (animated) {
@@ -158,26 +209,52 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
   }
 
   async function moveToCoord(coord: number[]): Promise<void> {
+    validateCoordinate(coord);
     await moveTo(absPoint(coord));
   }
 
-  // ── Screenshot helpers ──────────────────────────────────
+  /* ===== Screenshot helpers ===== */
 
   async function captureScreenshot(): Promise<string> {
     const image = await source.captureImage();
     const png = await image.toPng();
-    return png.toString("base64");
+    // Always resize to the dimensions we report to the model.
+    // On HiDPI/Retina, node-screenshots captures at physical pixel
+    // resolution (e.g. 3456x2234) but we report logical dimensions
+    // (1728x1117). Without resizing, the model sees a larger image
+    // and sends coordinates in that space, causing 2x misalignment.
+    // When aspect-ratio scaling is also active, this further
+    // downscales to the target resolution (e.g. 1366x768).
+    const resized = await sharp(png)
+      .resize(displayWidth, displayHeight, { fit: "fill" })
+      .png()
+      .toBuffer();
+    return resized.toString("base64");
   }
 
   async function captureZoom(region: number[]): Promise<string> {
-    const [x1, y1, x2, y2] = region;
+    // Region is in API coordinates — scale to native before cropping.
+    // We also need to account for the HiDPI scale factor: the captured
+    // image is in physical pixels, so multiply by the ratio of physical
+    // to logical dimensions.
     const image = await source.captureImage();
-    const cropped = await image.crop(x1, y1, x2 - x1, y2 - y1);
+    const physicalWidth = image.width;
+    const logicalWidth = source.width;
+    const hdpiScale = physicalWidth / logicalWidth;
+
+    const topLeft = scaling.toNative(region[0], region[1]);
+    const bottomRight = scaling.toNative(region[2], region[3]);
+    const cropped = await image.crop(
+      Math.round(topLeft.x * hdpiScale),
+      Math.round(topLeft.y * hdpiScale),
+      Math.round((bottomRight.x - topLeft.x) * hdpiScale),
+      Math.round((bottomRight.y - topLeft.y) * hdpiScale)
+    );
     const png = await cropped.toPng();
     return png.toString("base64");
   }
 
-  // ── Modifier key helper ──────────────────────────────────
+  /* ===== Modifier key helper ===== */
 
   async function withModifiers<T>(
     text: string | undefined,
@@ -195,14 +272,14 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
     }
   }
 
-  // ── Action executor ─────────────────────────────────────
+  /* ===== Action executor ===== */
 
   // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: action dispatch over 18 Anthropic actions is inherently branchy
   async function execute(input: ToolInput): Promise<ToolOutput> {
     const { action } = input;
 
     switch (action) {
-      // ─── Screenshots ─────────────────────────────────────
+      /* ===== Screenshots ===== */
       case "screenshot": {
         if (target.mode === "window") {
           refreshSource();
@@ -222,7 +299,7 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
         return { type: "image", data };
       }
 
-      // ─── Mouse Movement ──────────────────────────────────
+      /* ===== Mouse Movement ===== */
       case "mouse_move": {
         if (input.coordinate === undefined) {
           throw new Error("mouse_move requires coordinate");
@@ -233,10 +310,14 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
 
       case "cursor_position": {
         const pos = await mouse.getPosition();
-        return `Cursor is at (${pos.x}, ${pos.y})`;
+        const apiPos = scaling.toApi(
+          pos.x - source.offsetX,
+          pos.y - source.offsetY
+        );
+        return `Cursor is at (${apiPos.x}, ${apiPos.y})`;
       }
 
-      // ─── Mouse Clicks ────────────────────────────────────
+      /* ===== Mouse Clicks ===== */
       case "left_click": {
         if (input.coordinate !== undefined) {
           await moveToCoord(input.coordinate);
@@ -281,10 +362,10 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
         return "Triple clicked";
       }
 
-      // ─── Fine-Grained Mouse Control ──────────────────────
+      /* ===== Fine-Grained Mouse Control ===== */
       case "left_mouse_down": {
         if (input.coordinate !== undefined) {
-          await moveToCoord(input.coordinate);
+          throw new Error("coordinate is not accepted for left_mouse_down");
         }
         await withModifiers(input.text, () => mouse.pressButton(Button.LEFT));
         return "Left mouse button pressed down";
@@ -292,13 +373,13 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
 
       case "left_mouse_up": {
         if (input.coordinate !== undefined) {
-          await moveToCoord(input.coordinate);
+          throw new Error("coordinate is not accepted for left_mouse_up");
         }
         await withModifiers(input.text, () => mouse.releaseButton(Button.LEFT));
         return "Left mouse button released";
       }
 
-      // ─── Drag ────────────────────────────────────────────
+      /* ===== Drag ===== */
       case "left_click_drag": {
         if (
           input.start_coordinate === undefined ||
@@ -308,6 +389,8 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
             "left_click_drag requires start_coordinate and coordinate"
           );
         }
+        validateCoordinate(input.start_coordinate);
+        validateCoordinate(input.coordinate);
         const start = absPoint(input.start_coordinate);
         const end = absPoint(input.coordinate);
         await withModifiers(input.text, async () => {
@@ -321,7 +404,7 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
         return `Dragged from (${sx}, ${sy}) to (${ex}, ${ey})`;
       }
 
-      // ─── Scroll ──────────────────────────────────────────
+      /* ===== Scroll ===== */
       case "scroll": {
         const amount = input.scroll_amount ?? 3;
 
@@ -352,7 +435,7 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
         return `Scrolled ${input.scroll_direction} by ${amount}`;
       }
 
-      // ─── Keyboard ────────────────────────────────────────
+      /* ===== Keyboard ===== */
       case "type": {
         if (input.text === undefined) {
           throw new Error("type requires text");
@@ -360,10 +443,12 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
         if (animated) {
           await keyboard.type(input.text);
         } else {
-          for (const char of input.text) {
-            await keyboard.type(char);
+          for (const chunk of chunks(input.text, TYPING_GROUP_SIZE)) {
+            for (const char of chunk) {
+              await keyboard.type(char);
+            }
             if (typeCharDelayMs > 0) {
-              await sleep(typeCharDelayMs);
+              await sleep(typeCharDelayMs * chunk.length);
             }
           }
         }
@@ -394,11 +479,16 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
         return `Held key(s) "${keyStr}" for ${duration}s`;
       }
 
-      // ─── Wait ────────────────────────────────────────────
+      /* ===== Wait ===== */
       case "wait": {
         const duration = input.duration ?? 1;
         await sleep(duration * 1000);
-        return `Waited ${duration}s`;
+        // Return a screenshot after waiting (matches Anthropic reference)
+        if (target.mode === "window") {
+          refreshSource();
+        }
+        const data = await captureScreenshot();
+        return { type: "image", data };
       }
 
       default:
@@ -406,7 +496,7 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
     }
   }
 
-  // ── Build model output converter ────────────────────────
+  /* ===== Build model output converter ===== */
 
   function toModelOutput({ output }: { output: ToolOutput }) {
     if (typeof output === "string") {
@@ -416,7 +506,7 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
       type: "content" as const,
       value: [
         {
-          type: "file-data" as const,
+          type: "image-data" as const,
           data: output.data,
           mediaType: "image/png" as const,
         },
@@ -424,7 +514,7 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
     };
   }
 
-  // ── Build and return the tool ───────────────────────────
+  /* ===== Build and return the tool ===== */
 
   const commonOpts = {
     displayWidthPx: displayWidth,
@@ -432,26 +522,26 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
     ...(displayNumber !== undefined && { displayNumber }),
   };
 
-  if (toolVersion === "20251124") {
-    return {
-      tool: anthropic.tools.computer_20251124({
-        ...commonOpts,
-        enableZoom,
-        execute,
-        toModelOutput,
-      }),
-      displaySize: { width: displayWidth, height: displayHeight },
-      refreshSource,
-    };
-  }
-
-  return {
-    tool: anthropic.tools.computer_20250124({
-      ...commonOpts,
-      execute,
-      toModelOutput,
-    }),
-    displaySize: { width: displayWidth, height: displayHeight },
-    refreshSource,
-  };
+  return toolVersion === "20250124"
+    ? {
+        tool: anthropic.tools.computer_20250124({
+          ...commonOpts,
+          execute,
+          toModelOutput,
+        }),
+        displaySize: { width: displayWidth, height: displayHeight },
+        scaling,
+        refreshSource,
+      }
+    : {
+        tool: anthropic.tools.computer_20251124({
+          ...commonOpts,
+          enableZoom,
+          execute,
+          toModelOutput,
+        }),
+        displaySize: { width: displayWidth, height: displayHeight },
+        scaling,
+        refreshSource,
+      };
 }

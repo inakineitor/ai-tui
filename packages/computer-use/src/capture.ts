@@ -1,7 +1,7 @@
 import type { Image } from "node-screenshots";
 import { Monitor, Window } from "node-screenshots";
 
-// ─── Capture Target Types ────────────────────────────────
+/* ===== Capture Target Types ===== */
 
 /**
  * "desktop" — Captures the primary monitor (default behavior).
@@ -16,7 +16,7 @@ export type CaptureTarget =
   | { mode: "window"; by: "id"; id: number }
   | { mode: "window"; by: "title"; title: string };
 
-// ─── Monitor Resolution ──────────────────────────────────
+/* ===== Monitor Resolution ===== */
 
 function getPrimaryMonitor(): Monitor {
   const monitors = Monitor.all();
@@ -69,7 +69,7 @@ function resolveMonitor(target: CaptureTarget): Monitor {
   }
 }
 
-// ─── Window Resolution ───────────────────────────────────
+/* ===== Window Resolution ===== */
 
 function resolveWindow(target: CaptureTarget): Window {
   if (target.mode !== "window") {
@@ -110,7 +110,91 @@ function resolveWindow(target: CaptureTarget): Window {
   }
 }
 
-// ─── Unified Capture Interface ───────────────────────────
+/* ===== Screenshot Scaling ===== */
+
+type Resolution = { width: number; height: number };
+
+/**
+ * Standard resolutions that Anthropic recommends for computer use.
+ * Screenshots larger than these are scaled down to reduce token usage
+ * and improve model accuracy (models were trained at these resolutions).
+ */
+const MAX_SCALING_TARGETS: Resolution[] = [
+  { width: 1024, height: 768 }, // XGA (4:3)
+  { width: 1280, height: 800 }, // WXGA (16:10)
+  { width: 1366, height: 768 }, // FWXGA (~16:9)
+];
+
+/**
+ * Find a scaling target for the given dimensions.
+ * Returns the target resolution if scaling is needed, or null if the
+ * display is already at or below the target size.
+ */
+function findScalingTarget(width: number, height: number): Resolution | null {
+  const ratio = width / height;
+  for (const target of MAX_SCALING_TARGETS) {
+    // Allow some error in aspect ratio (~2%)
+    if (Math.abs(target.width / target.height - ratio) < 0.02) {
+      if (target.width < width) {
+        return target;
+      }
+      return null;
+    }
+  }
+  return null;
+}
+
+export type ScalingInfo = {
+  /** Whether scaling is active */
+  enabled: boolean;
+  /** The dimensions reported to the model */
+  scaledWidth: number;
+  scaledHeight: number;
+  /** The actual native dimensions */
+  nativeWidth: number;
+  nativeHeight: number;
+  /** Scale API coordinates → native coordinates */
+  toNative(x: number, y: number): { x: number; y: number };
+  /** Scale native coordinates → API coordinates */
+  toApi(x: number, y: number): { x: number; y: number };
+};
+
+export function computeScaling(
+  nativeWidth: number,
+  nativeHeight: number
+): ScalingInfo {
+  const target = findScalingTarget(nativeWidth, nativeHeight);
+  if (target === null) {
+    return {
+      enabled: false,
+      scaledWidth: nativeWidth,
+      scaledHeight: nativeHeight,
+      nativeWidth,
+      nativeHeight,
+      toNative: (x, y) => ({ x, y }),
+      toApi: (x, y) => ({ x, y }),
+    };
+  }
+  const xFactor = target.width / nativeWidth;
+  const yFactor = target.height / nativeHeight;
+  return {
+    enabled: true,
+    scaledWidth: target.width,
+    scaledHeight: target.height,
+    nativeWidth,
+    nativeHeight,
+    toNative: (x, y) => ({
+      x: Math.round(x / xFactor),
+      y: Math.round(y / yFactor),
+    }),
+    toApi: (x, y) => ({
+      x: Math.round(x * xFactor),
+      y: Math.round(y * yFactor),
+    }),
+  };
+}
+
+/* ===== Unified Capture Interface ===== */
 
 export type CaptureSource = {
   captureImage(): Promise<Image>;
@@ -143,7 +227,7 @@ export function resolveCaptureSource(target: CaptureTarget): CaptureSource {
   };
 }
 
-// ─── Discovery Helpers ───────────────────────────────────
+/* ===== Discovery Helpers ===== */
 
 /** List all available monitors for configuration/debugging. */
 export function listMonitors(): Array<{

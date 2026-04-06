@@ -2,6 +2,8 @@
 export {
   type CaptureSource,
   type CaptureTarget,
+  type ScalingInfo,
+  computeScaling,
   listMonitors,
   listWindows,
 } from "./capture.js";

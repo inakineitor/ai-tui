@@ -66,6 +66,9 @@ importers:
       node-screenshots:
         specifier: ^0.2.8
         version: 0.2.8
+      sharp:
+        specifier: ^0.34.5
+        version: 0.34.5
     devDependencies:
       '@ai-sdk/anthropic':
         specifier: ^3.0.67
@@ -76,6 +79,9 @@ importers:
       '@types/node':
         specifier: ^22.0.0
         version: 22.19.17
+      ai:
+        specifier: ^6.0.68
+        version: 6.0.68(zod@4.3.6)
       tsdown:
         specifier: ^0.20.1
         version: 0.20.1(publint@0.3.17)(typescript@5.5.4)
@@ -2918,8 +2924,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@img/colour@1.0.0':
-    optional: true
+  '@img/colour@1.0.0': {}
 
   '@img/sharp-darwin-arm64@0.34.5':
     optionalDependencies:
@@ -3929,8 +3934,7 @@ snapshots:
 
   detect-indent@6.1.0: {}
 
-  detect-libc@2.1.2:
-    optional: true
+  detect-libc@2.1.2: {}
 
   diff@8.0.2: {}
 
@@ -4767,7 +4771,6 @@ snapshots:
       '@img/sharp-win32-arm64': 0.34.5
       '@img/sharp-win32-ia32': 0.34.5
       '@img/sharp-win32-x64': 0.34.5
-    optional: true
 
   shebang-command@1.2.0:
     dependencies:

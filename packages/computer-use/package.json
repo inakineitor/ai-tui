@@ -38,12 +38,14 @@
   "dependencies": {
     "@ai-sdk/provider-utils": "^4.0.23",
     "@nut-tree-fork/nut-js": "^4.2.2",
-    "node-screenshots": "^0.2.8"
+    "node-screenshots": "^0.2.8",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "@ai-sdk/anthropic": "^3.0.67",
     "@ai-tui/tsconfig": "workspace:*",
     "@types/node": "^22.0.0",
+    "ai": "^6.0.68",
     "tsdown": "^0.20.1",
     "typescript": "^5"
   },
