@@ -1,5 +1,11 @@
 # @ai-tui/core
 
+## 0.1.3
+
+### Patch Changes
+
+- 4727b0f: Updated readme
+
 ## 0.1.2
 
 ### Patch Changes
