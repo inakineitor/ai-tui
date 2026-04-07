@@ -1,6 +1,6 @@
 {
   "name": "@ai-tui/core",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Build AI agent terminal UIs with the Vercel AI SDK",
   "type": "module",
   "imports": {
@@ -58,8 +58,8 @@
     "@ai-sdk/react": "^3.0.41",
     "@ai-tui/tsconfig": "workspace:*",
     "@happy-dom/global-registrator": "^20.3.7",
-    "@opentui/core": "^0.1.72",
-    "@opentui/react": "^0.1.72",
+    "@opentui/core": "^0.1.97",
+    "@opentui/react": "^0.1.97",
     "@testing-library/react": "^16.3.2",
     "@types/figlet": "^1.7.0",
     "@types/mime-types": "^3.0.1",
