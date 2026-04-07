@@ -8,5 +8,5 @@
     "inlineSources": false,
     "preserveWatchOutput": true
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "examples"]
 }
