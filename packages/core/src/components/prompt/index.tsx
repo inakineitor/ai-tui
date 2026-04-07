@@ -743,7 +743,8 @@ export function Prompt({
       // Normalize line endings at the boundary
       // Windows ConPTY/Terminal often sends CR-only newlines in bracketed paste
       // Replace CRLF first, then any remaining CR
-      const normalizedText = event.text
+      const normalizedText = new TextDecoder()
+        .decode(event.bytes)
         .replace(/\r\n/g, "\n")
         .replace(/\r/g, "\n");
       const pastedContent = normalizedText.trim();
