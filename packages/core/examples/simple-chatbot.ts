@@ -12,7 +12,7 @@
  */
 
 import { Agent, type ConfigInput, TerminalUI } from "@ai-tui/core";
-import { DirectChatTransport, ToolLoopAgent, gateway, stepCountIs } from "ai";
+import { DirectChatTransport, ToolLoopAgent, stepCountIs } from "ai";
 
 const assistant = new Agent({
   id: "assistant",
@@ -29,11 +29,6 @@ const assistant = new Agent({
     });
     return new DirectChatTransport({ agent, ...transportOptions });
   },
-  placeholders: [
-    "Ask me anything...",
-    "What can I help you with?",
-    "Type a question to get started",
-  ],
 });
 
 const config: ConfigInput = {
@@ -45,11 +40,6 @@ const config: ConfigInput = {
       { text: "Chatbot", style: "gradient" },
     ],
   },
-  tips: [
-    "Type a message and press Enter to chat",
-    "Press Ctrl+C to exit",
-    "Press ? for help",
-  ],
 };
 
 const tui = new TerminalUI(config);

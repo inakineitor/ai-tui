@@ -1,5 +1,11 @@
 # @ai-tui/core
 
+## 0.2.1
+
+### Patch Changes
+
+- 9595d84: Removed unnecessary dependencies from @ai-tui/core example.
+
 ## 0.2.0
 
 ### Minor Changes
