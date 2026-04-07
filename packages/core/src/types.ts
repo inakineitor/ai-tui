@@ -105,12 +105,14 @@ export type AgentCreateTransport<
     DirectChatTransportOptions<CALL_OPTIONS, TOOLS, OUTPUT, UI_MESSAGE>,
     "agent"
   >;
-}) => Promise<ChatTransport<UIMessage>>;
+}) => Promise<ChatTransport<UIMessage>> | ChatTransport<UIMessage>;
 
 export class Agent<
-  CALL_OPTIONS = never,
+  // biome-ignore lint/suspicious/noExplicitAny: // TODO: Put a better type.
+  CALL_OPTIONS = any,
   TOOLS extends ToolSet = ToolSet,
-  OUTPUT extends Output.Output = never,
+  // biome-ignore lint/suspicious/noExplicitAny: // TODO: Put a better type.
+  OUTPUT extends Output.Output = any,
   UI_MESSAGE extends UIMessage<unknown, never, InferUITools<TOOLS>> = UIMessage<
     unknown,
     never,

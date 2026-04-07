@@ -53,23 +53,25 @@ function initializeTransportCache(
   for (const agentDef of agents) {
     transportCache.set(
       agentDef.id,
-      agentDef.createTransport({
-        onElicitation,
-        transportOptions: {
-          sendReasoning: true,
-          messageMetadata: ({ part }) => {
-            if (isFinishPartWithUsage(part)) {
-              return {
-                usage: {
-                  inputTokens: part.totalUsage.inputTokens,
-                  outputTokens: part.totalUsage.outputTokens,
-                },
-              };
-            }
-            return;
+      Promise.resolve(
+        agentDef.createTransport({
+          onElicitation,
+          transportOptions: {
+            sendReasoning: true,
+            messageMetadata: ({ part }) => {
+              if (isFinishPartWithUsage(part)) {
+                return {
+                  usage: {
+                    inputTokens: part.totalUsage.inputTokens,
+                    outputTokens: part.totalUsage.outputTokens,
+                  },
+                };
+              }
+              return;
+            },
           },
-        },
-      })
+        })
+      )
     );
   }
 }
