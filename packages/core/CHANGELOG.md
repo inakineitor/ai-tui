@@ -1,5 +1,11 @@
 # @ai-tui/core
 
+## 0.2.2
+
+### Patch Changes
+
+- 28727fe: Upgraded dependencies and typescript versions
+
 ## 0.2.1
 
 ### Patch Changes
