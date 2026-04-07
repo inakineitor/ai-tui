@@ -1,5 +1,11 @@
 # @ai-tui/core
 
+## 0.2.0
+
+### Minor Changes
+
+- 42b2e04: Update agent interface and added example
+
 ## 0.1.3
 
 ### Patch Changes
