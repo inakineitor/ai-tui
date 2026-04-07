@@ -599,26 +599,24 @@ export function createComputerTool(options: ComputerToolOptions = {}) {
     ...(displayNumber !== undefined && { displayNumber }),
   };
 
-  return toolVersion === "20250124"
-    ? {
-        tool: anthropic.tools.computer_20250124({
+  const tool =
+    toolVersion === "20250124"
+      ? anthropic.tools.computer_20250124({
           ...commonOpts,
           execute: executeWithScreenshot,
           toModelOutput,
-        }),
-        displaySize: { width: displayWidth, height: displayHeight },
-        scaling,
-        refreshSource,
-      }
-    : {
-        tool: anthropic.tools.computer_20251124({
+        })
+      : anthropic.tools.computer_20251124({
           ...commonOpts,
           enableZoom,
           execute: executeWithScreenshot,
           toModelOutput,
-        }),
-        displaySize: { width: displayWidth, height: displayHeight },
-        scaling,
-        refreshSource,
-      };
+        });
+
+  return {
+    tool,
+    displaySize: { width: displayWidth, height: displayHeight },
+    scaling,
+    refreshSource,
+  };
 }

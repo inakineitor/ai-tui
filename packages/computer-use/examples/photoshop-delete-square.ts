@@ -47,22 +47,15 @@ async function main() {
     system: `You are controlling a Photoshop 2026 window on macOS.
 The captured area is ${displaySize.width}x${displaySize.height} pixels.
 All coordinates are relative to the Photoshop window.`,
-    prompt: `There is a red square in the center of the canvas. Delete it.
-
-Use the selection tool to select the red square, then delete it.
-A good approach:
-1. Take a screenshot to see the current state
-2. Use the Magic Wand tool (W key) or the rectangular marquee tool (M key) to select the red square
-3. Press Delete/Backspace to remove it
-4. Take a screenshot to confirm it's gone
-5. Summarize what you did`,
+    prompt: "There is a red square in the center of the canvas. Delete it.",
   });
 
   console.log("\n========== MODEL RESPONSE ==========");
   console.log(result.text || "(no text response)");
 
   console.log(`\n========== STEPS (${result.steps.length}) ==========`);
-  for (const [i, step] of result.steps.entries()) {
+  for (let i = 0; i < result.steps.length; i++) {
+    const step = result.steps[i];
     const toolCalls = step.toolCalls.length;
     const hasText = step.text.length > 0;
     console.log(
